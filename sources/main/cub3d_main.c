@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/11 15:20:55 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:22:04 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,4 +175,39 @@ void	update(void *param)
 	//usleep(16666);
 }
 
+int32_t	main(void)
+{
+	t_data	d;
+	int		map[5][5] = {{1, 1, 1, 1, 1}, {1, 0, 0, 0, 1}, {1, 0, 1, 0, 1}, {1,
+				0, 0, 0, 1}, {1, 1, 1, 1, 1}};
+	int		i;
+	int		j;
 
+	d.mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	d.img = mlx_new_image(d.mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(d.mlx, d.img, 0, 0);
+	init_player(&d, 1, 1.5, M_PI_4);
+	d.keys.w = false;
+	d.keys.s = false;
+	d.keys.a = false;
+	d.keys.d = false;
+	d.keys.left = false;
+	d.keys.right = false;
+	i = 0;
+	while (i < 5)
+	{
+		j = 0;
+		while (j < 5)
+		{
+			d.map[i][j] = map[i][j];
+			j++;
+		}
+		i++;
+	}
+	mlx_key_hook(d.mlx, key_hook, &d);
+	mlx_close_hook(d.mlx, (void (*)(void *))mlx_close_window, d.mlx);
+	mlx_loop_hook(d.mlx, update, &d);
+	mlx_loop(d.mlx);
+	mlx_terminate(d.mlx);
+	return (EXIT_SUCCESS);
+}
