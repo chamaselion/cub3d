@@ -5,14 +5,10 @@ SRC = $(SRC_DIR)/main/cub3d_main.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(SRC_DIR) -Iincludes -g -IMLX42/include
+CFLAGS = -Wall -Wextra -Werror -I$(SRC_DIR) -Iincludes -g
+MLX42_FLAGS = -lmlx42 -lm -lpthread -ldl -lglfw
 
-MLX42_DIR = MLX42
-MLX42_BUILD = $(MLX42_DIR)/build
-MLX42_LIB = $(MLX42_BUILD)/libmlx42.a
-MLX42_FLAGS = -L$(MLX42_BUILD) -lmlx42 -lm -lpthread -ldl -lglfw
-
-all: mlx $(OBJ_DIR) $(NAME)
+all: $(OBJ_DIR) $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -21,25 +17,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(MLX42_LIB):
-	@if [ ! -d "$(MLX42_DIR)" ]; then git clone https://github.com/codam-coding-college/MLX42.git $(MLX42_DIR); fi
-	@cd $(MLX42_DIR) && cmake -B build && cmake --build build
-
-mlx: $(MLX42_LIB)
-
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME) $(MLX42_FLAGS)
 
 clean:
 	rm -rf $(OBJ_DIR)
 
-cleanmlx:
-	@rm -rf MLX42
-	@echo "MLX42 folder is deleted!"
-
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re mlx cleanmlx
