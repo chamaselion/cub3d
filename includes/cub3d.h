@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/02/19 12:13:15 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:58:10 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <math.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -64,6 +65,24 @@ typedef struct s_update_vars
     int			lh, ds, de;
     uint32_t	col;
 }				t_update_vars;
+
+typedef struct s_player
+{
+	int			x;
+	int			y;
+}				t_player;
+
+typedef struct s_game
+{
+	void		*mlx;
+	char		**map;
+	int			map_fd;
+	int			x;
+	int			y;
+	int			height_map;
+	int			width_map;
+	t_player	player;
+}				t_game;
 
 void			move_player(t_data *d, float mx, float my);
 void			rotate(t_data *d, float rs);
