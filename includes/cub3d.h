@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/22 17:58:10 by alima            ###   ########.fr       */
+/*   Updated: 2025/05/26 22:32:13 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,17 @@ void			move_player(t_data *d, float mx, float my);
 void			rotate(t_data *d, float rs);
 void			key_hook(mlx_key_data_t kd, void *param);
 void			update(void *param);
+// we need this function
+// char	*get_next_line(int fd);
 
+// added 
+// parsing.c
+int		whitespaces(char *str);
+void	read_map(t_game *game, char *map);
+void	fill_map(t_game *game, char *reader);
+void	find_width(t_game *game);
+
+// checker.c
+int	check_walls(t_game *game);
+void	check_validity(t_game *game);
 #endif
