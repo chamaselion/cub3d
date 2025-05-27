@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:27:00 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/27 18:24:53 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:41:25 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-ssize_t	ft_strlen_gnl(const char *str)
+ssize_t	ft_strl_gnl(const char *str)
 {
 	ssize_t	c;
 
@@ -96,7 +96,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	c1 = 0;
 	if (!s1 || !s2)
 		return (free(s1), NULL);
-	r = (char *)malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	r = (char *)malloc(sizeof(char) * (ft_strl_gnl(s1) + ft_strl_gnl(s2) + 1));
 	if (!r)
 		return (free(s1), NULL);
 	while (s1[c] != '\0')

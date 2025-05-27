@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:13:00 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/27 18:25:12 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:41:24 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	process_buffer(t_gnl *gnl)
 		if (!gnl->line)
 			return (0);
 		ft_memmove_gnl(gnl->buffer[0], gnl->newline_pos + 1,
-			ft_strlen_gnl(gnl->newline_pos + 1) + 1);
+			ft_strl_gnl(gnl->newline_pos + 1) + 1);
 	}
-	else if (ft_strlen_gnl(gnl->buffer[0]) > 0)
+	else if (ft_strl_gnl(gnl->buffer[0]) > 0)
 	{
-		gnl->line = ft_strndup(gnl->buffer[0], ft_strlen_gnl(gnl->buffer[0]));
+		gnl->line = ft_strndup(gnl->buffer[0], ft_strl_gnl(gnl->buffer[0]));
 		if (!gnl->line)
 			return (gnl->line = NULL, 0);
 		*gnl->buffer[0] = '\0';
