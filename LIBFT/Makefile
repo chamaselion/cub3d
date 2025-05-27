@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alima <alima@student.42.fr>                +#+  +:+       +#+         #
+#    By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 14:27:44 by aokhapki          #+#    #+#              #
-#    Updated: 2025/05/26 16:19:28 by alima            ###   ########.fr        #
+#    Updated: 2025/05/27 18:37:14 by bszikora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,9 @@ SOURCE			=	ft_atoi.c \
 					ft_strjoin_con.c\
 					ft_split.c \
 					ft_strcspn.c \
-					ft_strstr.c
+					ft_strstr.c \
+					gnl/get_next_line.c \
+					gnl/get_next_line_utils.c
 OBJS			=	$(SOURCE:.c=.o)
 BONUS			=	ft_lstadd_front.c \
 					ft_lstnew.c \
@@ -65,7 +67,7 @@ BONUS			=	ft_lstadd_front.c \
 BONUS_OBJS		=	$(BONUS:.c=.o)
 CC				=	gcc
 RM				=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-Wall -Wextra -Werror -Ignl
 NAME			=	libft.a
 all:			$(NAME)
 $(NAME):		$(OBJS)

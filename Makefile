@@ -2,11 +2,13 @@ NAME 	= cub3d
 SRC_DIR = sources
 OBJ_DIR = obj
 
-SRC = $(SRC_DIR)/main/cub3d_main.c
+SRC = $(SRC_DIR)/main/cub3d_main.c \
+		$(SRC_DIR)/checkers/checker.c \
+		$(SRC_DIR)/parsing/parsing.c
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(SRC_DIR) -Iincludes -g -IMLX42/include
+CFLAGS = -Wall -Wextra -I$(SRC_DIR) -Iincludes -g -IMLX42/include -ILIBFT
 
 LIB = LIBFT/libft.a
 
@@ -31,15 +33,15 @@ $(MLX42_LIB):
 mlx: $(MLX42_LIB)
 
 $(NAME): $(OBJ)
-	@$(MAKE) -C libft
+	@$(MAKE) -C LIBFT
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(MLX42_FLAGS) $(LIB)
 
 $(LIB):
-	@$(MAKE) -C libft
+	@$(MAKE) -C LIBFT
 
 clean:
 	rm -rf $(OBJ_DIR)
-	@$(MAKE) -C libft fclean
+	@$(MAKE) -C LIBFT clean
 
 cleanmlx:
 	@rm -rf MLX42
@@ -47,7 +49,7 @@ cleanmlx:
 
 fclean: clean
 	rm -f $(NAME)
-	@$(MAKE) -C libft fclean
+	@$(MAKE) -C LIBFT fclean
 
 re: fclean all
 

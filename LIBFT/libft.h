@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:26:24 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/05/26 16:19:12 by alima            ###   ########.fr       */
+/*   Updated: 2025/05/27 18:34:36 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "gnl/get_next_line.h"
 
 typedef struct s_list
 {
@@ -76,4 +77,8 @@ void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
+
+//gnl
+
+char				*get_next_line(int fd);
 #endif

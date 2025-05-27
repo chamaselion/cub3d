@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/05/26 16:07:35 by alima            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:10:48 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_walls(t_game *game)
 		if (game->map[0][x] != '1' || game->map[game->height_map
 			- 1][x++] != '1')
 		{
-			ft_printf("Error! Map not sourrounded by walls!\n");
+			printf("Error! Map not sourrounded by walls!\n");
 			return (1);
 		}
 	}
@@ -33,7 +33,7 @@ int	check_walls(t_game *game)
 		if (game->map[y][0] != '1' || game->map[y++][game->width_map
 			- 1] != '1')
 		{
-			ft_printf("Error! Map not sourrounded by walls!\n");
+			printf("Error! Map not sourrounded by walls!\n");
 			return (1);
 		}
 	}
@@ -67,6 +67,6 @@ void	check_validity(t_game *game)
 	if (checker == 1)
 	{
 		free(game->map);
-		finish(0);
+		//finish(0);
 	}
 }

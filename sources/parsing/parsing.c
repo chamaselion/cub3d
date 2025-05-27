@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/05/26 22:26:44 by alima            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:10:59 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	read_map(t_game *game, char *map)
 	if (ft_strlen(map) <= 4 || ft_strncmp(map + (ft_strlen(map) - 4), ".cub",
 			4))
 	{
-		ft_printf("Error! Map's name is not correct.\n");
+		printf("Error! Map's name is not correct.\n");
 		exit(EXIT_FAILURE);
 	}
 	game->map_fd = open(map, O_RDONLY);
 	if (game->map_fd < 0)
 	{
-		ft_printf("Error! Couldn't load the map!\n");
+		printf("Error! Couldn't load the map!\n");
 		exit(EXIT_FAILURE);
 	}
 	reader = get_next_line(game->map_fd);

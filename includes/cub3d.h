@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/26 22:32:13 by alima            ###   ########.fr       */
+/*   Updated: 2025/05/27 19:23:12 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "libft.h"
 
 # define WIDTH 1920
 # define HEIGHT 1080
