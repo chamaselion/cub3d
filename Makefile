@@ -50,8 +50,6 @@ cleanmlx:
 fclean: clean
 	rm -f $(NAME)
 	@$(MAKE) -C LIBFT fclean
-	@rm -rf MLX42
-	@echo "MLX42 folder is deleted!"
 
 re: fclean all
 

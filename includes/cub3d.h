@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/27 22:14:02 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:59:03 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 1000
 # define CEILING_COLOR 0x303030FF
 # define FLOOR_COLOR 0x606060FF
-# define WALL_NORTH_SOUTH 0x0000FFFF
-# define WALL_EAST_WEST 0xFFFFFFFF
+# define WALL_NORTH 0x0000FFFF
+# define WALL_SOUTH 0x00FF00FF
+# define WALL_EAST 0xFFFFFFFF
+# define WALL_WEST 0xFF0000FF
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
 # define EAST 0
@@ -65,7 +67,7 @@ typedef struct s_update_vars
     double		sdx, sdy;
     double		ddx, ddy;
     int			stepx, stepy;
-    int			hit, side;
+    int			hit, side;  // side: 0 = NORTH, 1 = SOUTH, 2 = EAST, 3 = WEST
     double		pwd;
     int			lh, ds, de;
     uint32_t	col;
