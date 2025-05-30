@@ -8,7 +8,7 @@ SRC = $(SRC_DIR)/main/cub3d_main.c \
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -I$(SRC_DIR) -Iincludes -g -IMLX42/include -ILIBFT
+CFLAGS = -Wall -Wextra -Werror -I$(SRC_DIR) -Iincludes -g -IMLX42/include -ILIBFT
 
 LIB = LIBFT/libft.a
 
@@ -50,6 +50,8 @@ cleanmlx:
 fclean: clean
 	rm -f $(NAME)
 	@$(MAKE) -C LIBFT fclean
+	@rm -rf MLX42
+	@echo "MLX42 folder is deleted!"
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/27 19:25:27 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:35:23 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	move_player(t_data *d, float mx, float my)
 {
-	if (d->map[(int)(d->py)][(int)(d->px + mx)] == 0)
+	if (d->map[(int)(d->py)][(int)(d->px + mx)] == '0')
 		d->px += mx;
-	if (d->map[(int)(d->py + my)][(int)(d->px)] == 0)
+	if (d->map[(int)(d->py + my)][(int)(d->px)] == '0')
 		d->py += my;
 }
 
@@ -146,7 +146,7 @@ void	update(void *param)
 				v.my += v.stepy;
 				v.side = 1;
 			}
-			if (d->map[v.my][v.mx] == 1)
+			if (d->map[v.my][v.mx] == '1')
 				v.hit = 1;
 		}
 		if (v.side)
@@ -175,39 +175,120 @@ void	update(void *param)
 	//usleep(16666);
 }
 
-int32_t	main(void)
+char	*trim_map_line(char *line)
 {
-	t_data	d;
-	int		map[5][5] = {{1, 1, 1, 1, 1}, {1, 0, 0, 0, 1}, {1, 0, 1, 0, 1}, {1,
-				0, 0, 0, 1}, {1, 1, 1, 1, 1}};
 	int		i;
 	int		j;
+	char	*trimmed;
 
-	d.mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
-	d.img = mlx_new_image(d.mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(d.mlx, d.img, 0, 0);
-	init_player(&d, 1, 1.5, M_PI_4);
-	d.keys.w = false;
-	d.keys.s = false;
-	d.keys.a = false;
-	d.keys.d = false;
-	d.keys.left = false;
-	d.keys.right = false;
+	if (!line)
+		return (NULL);
+	trimmed = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	if (!trimmed)
+		return (NULL);
 	i = 0;
-	while (i < 5)
+	j = 0;
+	while (line[i])
 	{
-		j = 0;
-		while (j < 5)
-		{
-			d.map[i][j] = map[i][j];
-			j++;
-		}
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			trimmed[j++] = line[i];
 		i++;
 	}
-	mlx_key_hook(d.mlx, key_hook, &d);
-	mlx_close_hook(d.mlx, (void (*)(void *))mlx_close_window, d.mlx);
-	mlx_loop_hook(d.mlx, update, &d);
-	mlx_loop(d.mlx);
-	mlx_terminate(d.mlx);
+	trimmed[j] = '\0';
+	return (trimmed);
+}
+
+void	free_char_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+int init_game(t_game *g, char *argv1)
+{
+	g->height_map = 0;
+	g->map = NULL;
+	g->map_fd = -1;
+	g->mlx = NULL;
+	g->player = (t_player){0};
+	g->width_map = 0;
+	g->x = 0;
+	g->x = 0;
+	read_map(g, argv1);
+	return (0);
+}
+
+int trim_it(t_game *g, t_data *d)
+{
+	int	c;
+
+	c = 0;
+	while (g->map[c])
+		c++;
+	d->map = malloc(sizeof(char *) * (c + 1));
+	if (!d->map)
+		return (1);
+	d->map[c] = NULL;
+	c = 0;
+	while (g->map[c])
+	{
+		d->map[c] = trim_map_line(g->map[c]);
+		c++;
+	}
+	free_char_array(g->map);
+	return (0);
+}
+
+int start_game(t_data *d)
+{
+	d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(d->mlx, d->img, 0, 0);
+	init_player(d, 1, 1.5, NORTH);
+	d->keys.w = false;
+	d->keys.s = false;
+	d->keys.a = false;
+	d->keys.d = false;
+	d->keys.left = false;
+	d->keys.right = false;
+	mlx_key_hook(d->mlx, key_hook, d);
+	mlx_close_hook(d->mlx, (void (*)(void *))mlx_close_window, d->mlx);
+	mlx_loop_hook(d->mlx, update, d);
+	mlx_loop(d->mlx);
+	mlx_terminate(d->mlx);
+	free_char_array(d->map);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data	d;
+	t_game	g;
+
+	if (argc != 2)
+		return (1);
+	init_game(&g, argv[1]);
+	trim_it(&g, &d);
+	start_game(&d);
 	return (EXIT_SUCCESS);
 }
+
+	// char **cc = d.map;
+	// int ii = 0;
+	// if (cc)
+	// {
+	// 	while (cc[ii])
+	// 	{
+	// 		printf("line: %s\n", cc[ii]);
+	// 		ii++;
+	// 	}
+	// }

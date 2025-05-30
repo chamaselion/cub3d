@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/27 19:23:12 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/05/27 22:14:02 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define WALL_EAST_WEST 0xFFFFFFFF
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
+# define EAST 0
+# define NORTH M_PI_2
+# define WEST M_PI
+# define SOUTH 4.71238898038469 // Approximation of 3 * π / 2
 
 typedef struct s_keys
 {
@@ -50,7 +54,7 @@ typedef struct s_data
 	float		dy;
 	float		ply;
 	t_keys		keys;
-	int			map[5][5];
+	char		**map;
 }				t_data;
 
 typedef struct s_update_vars
@@ -98,6 +102,8 @@ int		whitespaces(char *str);
 void	read_map(t_game *game, char *map);
 void	fill_map(t_game *game, char *reader);
 void	find_width(t_game *game);
+// added
+char	*trim_map_line(char *line);
 
 // checker.c
 int	check_walls(t_game *game);
