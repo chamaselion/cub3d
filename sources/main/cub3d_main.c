@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/30 15:07:17 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:42:03 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,11 +219,77 @@ void	draw_wall_strip(t_data *d, t_update_vars *v, int x)
 	draw_wall_strip_paint(v, d, x);
 }
 
+void	calculate_texture_coordinates(t_data *d, t_update_vars *v,
+		double *wall_x, double *step)
+{
+	if (v->side == 2 || v->side == 3)
+		*wall_x = d->py + v->pwd * v->ry;
+	else
+		*wall_x = d->px + v->pwd * v->rx;
+	*wall_x = *wall_x - floor(*wall_x);
+	d->t.tex_x = (int)(*wall_x * d->t.north_texture->width);
+	if (d->t.tex_x < 0)
+		d->t.tex_x = 0;
+	if (d->t.tex_x >= (int)d->t.north_texture->width)
+		d->t.tex_x = d->t.north_texture->width - 1;
+	if ((v->side == 2 || v->side == 3) && v->rx > 0)
+		d->t.tex_x = d->t.north_texture->width - d->t.tex_x - 1;
+	if ((v->side == 0 || v->side == 1) && v->ry < 0)
+		d->t.tex_x = d->t.north_texture->width - d->t.tex_x - 1;
+	*step = (double)d->t.north_texture->height / v->lh;
+	d->t.tex_pos = (v->ds - HEIGHT / 2 + v->lh / 2) * *step;
+}
+
+void	render_texture_column(t_data *d, t_update_vars *v, int x, double step)
+{
+	int	y;
+
+	y = v->ds;
+	while (y <= v->de)
+	{
+		d->t.tex_y = (int)d->t.tex_pos;
+		if (d->t.tex_y < 0)
+			d->t.tex_y = 0;
+		if (d->t.tex_y >= (int)d->t.north_texture->height)
+			d->t.tex_y = d->t.north_texture->height - 1;
+		d->t.tex_pos += step;
+		d->t.r = d->t.north_texture->pixels[(d->t.tex_y
+				* d->t.north_texture->width + d->t.tex_x) * 4 + 0];
+		d->t.g = d->t.north_texture->pixels[(d->t.tex_y
+				* d->t.north_texture->width + d->t.tex_x) * 4 + 1];
+		d->t.b = d->t.north_texture->pixels[(d->t.tex_y
+				* d->t.north_texture->width + d->t.tex_x) * 4 + 2];
+		d->t.a = d->t.north_texture->pixels[(d->t.tex_y
+				* d->t.north_texture->width + d->t.tex_x) * 4 + 3];
+		d->t.color = (d->t.r << 24) | (d->t.g << 16) | (d->t.b << 8) | d->t.a;
+		mlx_put_pixel(d->img, x, y, d->t.color);
+		y++;
+	}
+}
+
+void	draw_textured_wall_strip(t_data *d, t_update_vars *v, int x)
+{
+	double	wall_x;
+	double	step;
+
+	v->lh = (int)(HEIGHT / v->pwd);
+	v->ds = -v->lh / 2 + HEIGHT / 2;
+	v->de = v->lh / 2 + HEIGHT / 2;
+	if (v->ds < 0)
+		v->ds = 0;
+	if (v->de >= HEIGHT)
+		v->de = HEIGHT - 1;
+	calculate_texture_coordinates(d, v, &wall_x, &step);
+	render_texture_column(d, v, x, step);
+}
+
 void	cast_rays(t_data *d)
 {
 	t_update_vars	v;
 	int				x;
 
+	if (!d->t.north_texture)
+		return ;
 	x = 0;
 	while (x < WIDTH)
 	{
@@ -231,7 +297,7 @@ void	cast_rays(t_data *d)
 		setup_ray_steps(d, &v);
 		perform_dda(d, &v);
 		calculate_wall_distance(d, &v);
-		draw_wall_strip(d, &v, x);
+		draw_textured_wall_strip(d, &v, x);
 		x++;
 	}
 }
@@ -320,11 +386,25 @@ int	trim_it(t_game *g, t_data *d)
 	return (0);
 }
 
+void	get_texture(t_data *d)
+{
+	d->t.north_texture = mlx_load_png("textures/bluestone.png");
+	if (!d->t.north_texture)
+	{
+		printf("Error: Failed to load texture from textures/bluestone.png\n");
+		exit(1);
+	}
+	printf("Texture loaded successfully: %dx%d, bytes_per_pixel: %d\n",
+		d->t.north_texture->width, d->t.north_texture->height,
+		d->t.north_texture->bytes_per_pixel);
+}
+
 int	start_game(t_data *d)
 {
 	d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(d->mlx, d->img, 0, 0);
+	get_texture(d);
 	init_player(d, 1, 1.5, SOUTH);
 	d->keys.w = false;
 	d->keys.s = false;
@@ -337,6 +417,7 @@ int	start_game(t_data *d)
 	mlx_loop_hook(d->mlx, update, d);
 	mlx_loop(d->mlx);
 	mlx_terminate(d->mlx);
+	mlx_delete_texture(d->t.north_texture);
 	free_char_array(d->map);
 	return (0);
 }

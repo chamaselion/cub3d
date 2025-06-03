@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/05/30 14:59:03 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:35:50 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,35 @@ typedef struct s_keys
 	bool	right;
 }				t_keys;
 
+typedef struct s_textures
+{
+	mlx_texture_t	*south_texture;
+	mlx_texture_t	*north_texture;
+	mlx_texture_t	*east_texture;
+	mlx_texture_t	*west_texture;
+	double			tex_pos;
+	int				tex_x;
+	int				tex_y;
+	uint32_t		color;
+	uint8_t			r;
+	uint8_t			g;
+	uint8_t			b;
+	uint8_t			a;
+}				t_textures;
+
 typedef struct s_data
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	float		px;
-	float		dx;
-	float		plx;
-	float		py;
-	float		dy;
-	float		ply;
-	t_keys		keys;
-	char		**map;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_textures		t;
+	float			px;
+	float			dx;
+	float			plx;
+	float			py;
+	float			dy;
+	float			ply;
+	t_keys			keys;
+	char			**map;
 }				t_data;
 
 typedef struct s_update_vars
@@ -100,14 +117,14 @@ void			update(void *param);
 
 // added 
 // parsing.c
-int		whitespaces(char *str);
-void	read_map(t_game *game, char *map);
-void	fill_map(t_game *game, char *reader);
-void	find_width(t_game *game);
+int				whitespaces(char *str);
+void			read_map(t_game *game, char *map);
+void			fill_map(t_game *game, char *reader);
+void			find_width(t_game *game);
 // added
-char	*trim_map_line(char *line);
+char			*trim_map_line(char *line);
 
 // checker.c
-int	check_walls(t_game *game);
-void	check_validity(t_game *game);
+int				check_walls(t_game *game);
+void			check_validity(t_game *game);
 #endif
