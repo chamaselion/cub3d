@@ -10,8 +10,7 @@ SRC = $(SRC_DIR)/main/cub3d_main.c \
 		$(SRC_DIR)/main/wall_drawing.c \
 		$(SRC_DIR)/main/utils.c \
 		$(SRC_DIR)/checkers/checker.c \
-		$(SRC_DIR)/parsing/parsing.c \
-		$(SRC_DIR)/parsing/parsing_utils.c
+		$(SRC_DIR)/parsing/parsing.c
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
