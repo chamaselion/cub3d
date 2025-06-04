@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/05/27 19:10:59 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/03 23:46:19 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,3 @@ void	find_width(t_game *game)
 	}
 	game->width_map = tmp;
 }
-

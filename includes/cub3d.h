@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/03 18:35:50 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/04 00:01:23 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include "libft.h"
 
 # define WIDTH 1000
@@ -112,17 +113,41 @@ void			move_player(t_data *d, float mx, float my);
 void			rotate(t_data *d, float rs);
 void			key_hook(mlx_key_data_t kd, void *param);
 void			update(void *param);
-// we need this function
-// char	*get_next_line(int fd);
+void			init_player(t_data *d, float start_x, float start_y,
+					float dir_angle);
+void			handle_player_input(t_data *d);
+void			draw_ceiling(mlx_image_t *img);
+void			draw_floor(mlx_image_t *img);
+void			calculate_ray_direction(t_data *d, t_update_vars *v, int x);
+void			setup_ray_steps(t_data *d, t_update_vars *v);
+void			perform_dda(t_data *d, t_update_vars *v);
+void			calculate_wall_distance(t_data *d, t_update_vars *v);
+void			cast_rays(t_data *d);
+void			get_texture(t_data *d);
+void			calculate_texture_x(t_data *d, t_update_vars *v,
+					mlx_texture_t *texture, double wall_x);
+void			render_texture_pixel(t_data *d, mlx_texture_t *texture,
+					int x, int y);
+void			render_texture_column(t_data *d, t_update_vars *v,
+					mlx_texture_t *texture, int x);
+void			draw_textured_wall_strip(t_data *d, t_update_vars *v,
+					int x);
+void			draw_wall_strip_paint(t_update_vars *v, t_data *d, int x);
+void			draw_wall_strip(t_data *d, t_update_vars *v, int x);
+void			calculate_wall_boundaries(t_update_vars *v);
+void			select_wall_texture(t_data *d, t_update_vars *v,
+					mlx_texture_t **texture);
+void			calculate_wall_x(t_data *d, t_update_vars *v, double *wall_x);
+char			*trim_map_line(char *line);
+void			free_char_array(char **array);
+int				init_game(t_game *g, char *argv1);
+int				trim_it(t_game *g, t_data *d);
+int				start_game(t_data *d);
 
-// added 
-// parsing.c
 int				whitespaces(char *str);
 void			read_map(t_game *game, char *map);
 void			fill_map(t_game *game, char *reader);
 void			find_width(t_game *game);
-// added
-char			*trim_map_line(char *line);
 
 // checker.c
 int				check_walls(t_game *game);
