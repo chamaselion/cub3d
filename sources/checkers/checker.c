@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/06/06 21:43:24 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/06 21:52:05 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,45 @@ int is_empty(char c) // is passable path
 			c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	check_walls(t_game *game)
+
+int check_top_bottom(t_game *game)
 {
-	int	x;
-	int	y;
+	int x;
 
 	x = 0;
-	y = 0;
 	while (x < game->width_map)
 	{
-		if (game->map[0][x] != '1' || game->map[game->height_map
-			- 1][x++] != '1')
-		{
-			printf("Error! Map not sourrounded by walls!\n");
-			return (1);
-		}
+		if (!is_wall(game->map[0][x]))
+			return (printf("Error! Top wall not solid\n"), 1);
+		if (!is_wall(game->map[game->height_map - 1][x]))
+			return (printf("Error! Bottom wall not solid\n"), 1);
+		x++;
 	}
+	return (0);
+}
+
+int check_sides(t_game *game)
+{
+	int y;
+
+	y = 0;
 	while (y < game->height_map)
 	{
-		if (game->map[y][0] != '1' || game->map[y++][game->width_map
-			- 1] != '1')
-		{
-			printf("Error! Map not sourrounded by walls!\n");
-			return (1);
-		}
+		if (!is_wall(game->map[y][0]))
+			return (printf("Error! Left wall not solid\n"), 1);
+		if (!is_wall(game->map[y][game->width_map - 1]))
+			return (printf("Error! Right wall not solid\n"), 1);
+		y++;
 	}
+	return (0);
+}
+
+int	check_walls(t_game *game)
+{
+	if (check_top_bottom(game))
+		return (1);
+	if (check_sides(game))
+		return (1);
 	return (0);
 }
 
