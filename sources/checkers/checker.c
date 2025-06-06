@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/06/06 21:52:05 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/06 22:05:35 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,48 @@ int check_sides(t_game *game)
 	}
 	return (0);
 }
+int check_near(t_game *game, int y, int x)
+{
+	if (y > 0 && !is_wall(game->map[y-1][x]) && !is_empty(game->map[y-1][x]))
+		return (1);
+	if (y < game->height_map - 1 && !is_wall(game->map[y+1][x]) && !is_empty(game->map[y+1][x]))
+		return (1);
+	if (x > 0 && !is_wall(game->map[y][x-1]) && !is_empty(game->map[y][x-1]))
+		return (1);
+	if (x < game->width_map - 1 && !is_wall(game->map[y][x+1]) && !is_empty(game->map[y][x+1]))
+		return (1);
+	return (0);
+}
 
-int	check_walls(t_game *game)
+int check_interior(t_game *game)
+{
+	int x;
+	int y;
+
+	y = 1;
+	while (y < game->height_map - 1)
+	{
+		x = 1;
+		while (x < game->width_map - 1)
+		{
+			if (!is_valid_char(game->map[y][x]))
+				return (printf("Error! Invalid char at %d,%d\n", x, y), 1);
+			if (is_empty(game->map[y][x]) && check_near(game, y, x))
+				return (printf("Error! Unenclosed space at %d,%d\n", x, y), 1);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+int check_walls(t_game *game)
 {
 	if (check_top_bottom(game))
 		return (1);
 	if (check_sides(game))
+		return (1);
+	if (check_interior(game))
 		return (1);
 	return (0);
 }
