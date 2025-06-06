@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/06/06 22:05:35 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/06 22:31:11 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,24 @@ int check_walls(t_game *game)
 	return (0);
 }
 
+void normalize_spaces(t_game *game)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while (y < game->height_map)
+	{
+		x = 0;
+		while (x < game->width_map)
+		{
+			if (game->map[y][x] == ' ')
+				game->map[y][x] = '0';
+			x++;
+		}
+		y++;
+	}
+}
 
 void check_validity(t_game *game)
 {
@@ -120,4 +138,9 @@ void check_validity(t_game *game)
 		// free_map(game); to do
 		exit(EXIT_FAILURE);
 	}
+}
+void validate_map(t_game *game)
+{
+	normalize_spaces(game);  // Convert spaces to '0'
+	check_validity(game);
 }
