@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/05/27 19:10:48 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:43:24 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
+int is_valid_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'N' ||
+			c == 'S' || c == 'E' || c == 'W' || c == ' ');
+}
+
+int is_wall(char c)
+{
+	return (c == '1');
+}
+
+int is_empty(char c) // is passable path
+{
+	return (c == '0' || c == ' ' ||
+			c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
 
 int	check_walls(t_game *game)
 {
@@ -40,33 +58,16 @@ int	check_walls(t_game *game)
 	return (0);
 }
 
-// 'E' - exit if we are going to the bonus part
-// void	check_path(t_game *game, int new_y, int new_x, char c)
-// {
-// 	if (game->map[new_x][new_y] == '1'/* || (game->map[new_x][new_y] == 'E')*/)
-// 	{
-// 		if (c == 'w')
-// 			game->player.y += 1;
-// 		else if (c == 's')
-// 			game->player.y -= 1;
-// 		else if (c == 'a')
-// 			game->player.x += 1;
-// 		else if (c == 'd')
-// 			game->player.x -= 1;
-// 		return ;
-// 	}
-// 	keep_checking(game, new_y, new_x);
-// }
 
-void	check_validity(t_game *game)
+void check_validity(t_game *game)
 {
-	int	checker;
+	int checker;
 
-	checker = 0;
 	checker = check_walls(game);
-	if (checker == 1)
+	if (checker != 0)
 	{
-		free(game->map);
-		//finish(0);
+		printf("Map validation failed\n");
+		// free_map(game); to do
+		exit(EXIT_FAILURE);
 	}
 }
