@@ -2,16 +2,16 @@ NAME 	= cub3d
 SRC_DIR = sources
 OBJ_DIR = obj
 
-SRC = $(SRC_DIR)/main/cub3d_main.c \
-		$(SRC_DIR)/main/player_movement.c \
-		$(SRC_DIR)/main/rendering.c \
-		$(SRC_DIR)/main/raycast.c \
-		$(SRC_DIR)/main/texture.c \
-		$(SRC_DIR)/main/wall_drawing.c \
-		$(SRC_DIR)/main/utils.c \
-		$(SRC_DIR)/checkers/checker.c \
-		$(SRC_DIR)/parsing/parsing.c
-
+# SRC = $(SRC_DIR)/main/cub3d_main.c \
+# 		$(SRC_DIR)/main/player_movement.c \
+# 		$(SRC_DIR)/main/rendering.c \
+# 		$(SRC_DIR)/main/raycast.c \
+# 		$(SRC_DIR)/main/texture.c \
+# 		$(SRC_DIR)/main/wall_drawing.c \
+# 		$(SRC_DIR)/main/utils.c \
+# 		$(SRC_DIR)/checkers/checker.c \
+# 		$(SRC_DIR)/parsing/parsing.c
+SRC = $(wildcard $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC = gcc

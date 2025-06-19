@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/06 22:17:42 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/19 17:15:14 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,13 +144,25 @@ int				init_game(t_game *g, char *argv1);
 int				trim_it(t_game *g, t_data *d);
 int				start_game(t_data *d);
 
+// char_validation
+int 			is_valid_char(char c);
+int 			is_wall(char c);
+int 			is_empty(char c);
+void 			normalize_spaces(t_game *game);
+// map_validation
+int				check_player_number(t_game *game);
+void			check_validity(t_game *game);
+void 			validate_map(t_game *game);
+// wall_validation
+int 			check_top_bottom(t_game *game);
+int				check_sides(t_game *game);
+int				check_near(t_game *game, int y, int x);
+int				check_interior(t_game *game);
+int				check_walls(t_game *game);
+// parsing
 int				whitespaces(char *str);
 void			read_map(t_game *game, char *map);
 void			fill_map(t_game *game, char *reader);
 void			find_width(t_game *game);
 
-// checker.c
-int				check_walls(t_game *game);
-void			check_validity(t_game *game);
-void 			validate_map(t_game *game);
 #endif
