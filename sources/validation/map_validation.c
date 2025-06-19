@@ -6,7 +6,7 @@
 /*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:37 by alima             #+#    #+#             */
-/*   Updated: 2025/06/19 16:53:50 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/19 22:23:15 by alima            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,24 @@ int check_player_number(t_game *game)
 	return (1);
 }
 
+static void free_map(t_game *game)
+{
+	int i;
+	
+	if (!game->map)
+		return;
+	
+	i = 0;
+	while (i < game->height_map)
+	{
+		if (game->map[i])
+			free(game->map[i]);
+		i++;
+	}
+	free(game->map);
+	game->map = NULL;
+}
+
 void check_validity(t_game *game)
 {
 	int checker;
@@ -48,7 +66,7 @@ void check_validity(t_game *game)
 	if (checker != 0)
 	{
 		printf("Map validation failed\n");
-		// free_map(game); to do
+		free_map(game);
 		exit(EXIT_FAILURE);
 	}
 }
