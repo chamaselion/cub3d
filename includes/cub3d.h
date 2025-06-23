@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/19 17:15:14 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/23 10:24:37 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,15 @@ typedef struct s_game
 {
 	void		*mlx;
 	char		**map;
-	int			map_fd;
+	char		*so;
+	char		*no;
+	char		*we;
+	char		*ea;
+	int			c[3];
+	int			f[3];
 	int			x;
 	int			y;
+	int			map_fd;
 	int			height_map;
 	int			width_map;
 	t_player	player;
