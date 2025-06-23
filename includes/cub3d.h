@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/23 12:22:21 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:46:06 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,5 +183,6 @@ int				parse_line(t_game *g, char *ln);
 // parsing_rgb.c
 uint32_t		rgb_to_mlx_rgba(const int rgb[3]);
 int				parse_rgb(const char *ln, int *rgb);
-
+//error_handling.c
+void			err_exit_msg(const char *msg);
 #endif

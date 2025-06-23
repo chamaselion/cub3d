@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/23 11:41:05 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:48:04 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	process_line(t_game *g, char *ln, int *conf6)
 		while (*ln)
 		{
 			if (*tmp != '\n' && *tmp != ' ' && *tmp != '\t')
-			{
-				printf("Error\nInvalid config line!\n");
-				exit(EXIT_FAILURE);
-			}
+			   err_exit_msg("Invalid config line!");
 			tmp++;
 		}
 	}	
@@ -79,7 +76,7 @@ int	set_tex_path(char **tex_path, char *ln, char *prefix)
 			i++;
 		if (*tex_path != NULL)
 		{
-			printf("Error\nDuplicate texture definition!\n");
+			printf("Error! Duplicate texture definition!\n");
 			exit(EXIT_FAILURE);
 		}
 		*tex_path = ft_strdup(prefix_pos + (i + 2));
@@ -110,29 +107,44 @@ int	parse_line(t_game *g, char *ln)
     return (n);
 }
 
+// void	verify_tex_dup(t_game *g)
+// {
+// 	if (!g->so|| !g->no || !g->ea || !g->we)
+// 	{
+// 		printf("Error! Missing texture path!\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0)
+// 		|| (ft_strncmp(g->so, g->ea, ft_strlen(g->so)) == 0)
+// 		|| (ft_strncmp(g->so, g->we, ft_strlen(g->so)) == 0))
+// 	{
+// 		printf("Error! Duplicate texture detected!\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0)
+// 		|| (ft_strncmp(g->no, g->we, ft_strlen(g->no)) == 0))
+// 	{
+// 		printf("Error! Duplicate texture detected!\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
+// 	{
+// 		printf("Error! Duplicate texture detected!\n");
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
+
 void	verify_tex_dup(t_game *g)
 {
-	if (!g->so|| !g->no || !g->ea || !g->we)
-	{
-		printf("Error\nMissing texture path!\n");
-		exit(EXIT_FAILURE);
-	}
-	if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0)
-		|| (ft_strncmp(g->so, g->ea, ft_strlen(g->so)) == 0)
-		|| (ft_strncmp(g->so, g->we, ft_strlen(g->so)) == 0))
-	{
-		printf("Error\nDuplicate texture detected!\n");
-		exit(EXIT_FAILURE);
-	}
-	if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0)
-		|| (ft_strncmp(g->no, g->we, ft_strlen(g->no)) == 0))
-	{
-		printf("Error\nDuplicate texture detected!\n");
-		exit(EXIT_FAILURE);
-	}
-	if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
-	{
-		printf("Error\nDuplicate texture detected!\n");
-		exit(EXIT_FAILURE);
-	}
+    if (!g->so || !g->no || !g->ea || !g->we)
+        err_exit_msg("Missing texture path!");
+    if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0)
+        || (ft_strncmp(g->so, g->ea, ft_strlen(g->so)) == 0)
+        || (ft_strncmp(g->so, g->we, ft_strlen(g->so)) == 0))
+        err_exit_msg("Duplicate texture detected!");
+    if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0)
+        || (ft_strncmp(g->no, g->we, ft_strlen(g->no)) == 0))
+        err_exit_msg("Duplicate texture detected!");
+    if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
+        err_exit_msg("Duplicate texture detected!");
 }
