@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/23 10:24:37 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:27:13 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ typedef struct s_game
 	int			map_fd;
 	int			height_map;
 	int			width_map;
+	uint32_t	c_rgba;
+    uint32_t	f_rgba;
 	t_player	player;
 }				t_game;
 
