@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/19 17:15:10 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/23 12:19:36 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void	read_map(t_game *game, char *map)
 	game->map_fd = open(map, O_RDONLY);
 	if (game->map_fd < 0)
 	{
-		printf("Error! Couldn't load the map!\n");
+		printf("Error! Couldn't open the map!\n");
 		exit(EXIT_FAILURE);
 	}
+	load_config(game);
 	reader = get_next_line(game->map_fd);
 	while (whitespaces(reader) == 0)
 	{
@@ -58,7 +59,7 @@ void	fill_map(t_game *game, char *reader)
 	int	y;
 
 	y = 0;
-	game->map = ft_calloc(200, sizeof(char *));
+	game->map = ft_calloc(300, sizeof(char *));
 	game->width_map = ft_strlen(reader) - 1;
 	while (reader != NULL)
 	{

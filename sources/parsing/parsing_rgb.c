@@ -6,13 +6,13 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:01:31 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/23 11:29:54 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:44:01 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static uint32_t	rgb_to_mlx_rgba(const int rgb[3])
+uint32_t	rgb_to_mlx_rgba(const int rgb[3])
 {
     return ((uint32_t)rgb[0] << 24) | ((uint32_t)rgb[1] << 16) | ((uint32_t)rgb[2] << 8) | 255;
 }
