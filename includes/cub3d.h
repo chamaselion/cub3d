@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/23 11:27:13 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:46:25 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,16 @@ int				whitespaces(char *str);
 void			read_map(t_game *game, char *map);
 void			fill_map(t_game *game, char *reader);
 void			find_width(t_game *game);
+// parsing_6_lines.c
+int		set_tex_path(char **tex_path, char *ln, char *prefix);
+void	load_config(t_game *g);
+// void	load_tex(t_data *d);
+// void	load_img(t_data *d, mlx_image_t **img, const char *path);
+void	process_line(t_game *g, char *ln, int *conf6);
+void	verify_tex_dup(t_game *g);
+int		parse_line(t_game *g, char *ln);
+// parsing_rgb.c
+uint32_t	rgb_to_mlx_rgba(const int rgb[3]);
+int	parse_rgb(const char *ln, int *rgb);
 
 #endif
