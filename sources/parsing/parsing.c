@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/24 22:50:29 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:30:02 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	read_map(t_game *g, char *map)
 
 void	fill_map(t_game *game, char *reader)
 {
-	int	y = 0;
+	int	y;
 
+	y = 0;
 	game->map = ft_calloc(300, sizeof(char *));
 	while (reader)
 	{
@@ -60,7 +61,6 @@ void	fill_map(t_game *game, char *reader)
 		reader = get_next_line(game->map_fd);
 		game->height_map++;
 	}
-
 	while (y-- > 0 && whitespaces(game->map[y]) == 0)
 	{
 		free(game->map[y]);
@@ -68,10 +68,10 @@ void	fill_map(t_game *game, char *reader)
 		game->height_map--;
 	}
 }
-//too long
-// void	fill_map(t_game *game, char *reader)
-// {
-// 	int	y;
+// too long
+//  void	fill_map(t_game *game, char *reader)
+//  {
+//  	int	y;
 
 // 	y = 0;
 // 	game->map = ft_calloc(300, sizeof(char *));

@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/24 23:04:00 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:44:29 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,37 @@ void	load_config(t_game *g)
 		process_line(g, ln, &count);
 		free(ln);
 		if (count == 6)
-			break;
+			break ;
 		ln = get_next_line(g->map_fd);
 	}
 	// verify_tex_dup(g);
-	//load_tex(d);
+	// load_tex(d);
 }
 
 void	process_line(t_game *g, char *ln, int *conf6)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (ln[i] && !ft_isalpha(ln[i])) // skipping spaces, tabs and new lines until we find a letter
+	while (ln[i] && !ft_isalpha(ln[i]))
 		i++;
 	if (ln[i])
 	{
 		printf("Processing line: %s\n", ln);
-		*conf6 += parse_line(g, ln); // counting the variables we got
+		*conf6 += parse_line(g, ln);
 		printf("conf6: %d\n", *conf6);
 		if (*conf6 == 6)
-			return;
+			return ;
 	}
-	// if there is no letter in this line, we have two cases:
-	// 1. line is only spcases, or tabs or new lines: it is ok
-	// 2. line has some random characters like # or $ , this is not ok, we give error message
 	else
 	{
 		while (*ln)
 		{
 			if (*ln != '\n' && *ln != ' ' && *ln != '\t')
-			   err_exit_msg("Invalid line in config file!\n");
+				err_exit_msg("Invalid line in config file!\n");
 			ln++;
 		}
-	}	
+	}
 }
 
 // prefix = SO, NO etc
@@ -82,37 +79,37 @@ int	set_tex_path(char **tex_path, char *ln, char *prefix)
 
 int	parse_line(t_game *g, char *ln)
 {
-    int	n = 0;
+	int	n;
 
-    n += set_tex_path(&g->so, ln, "SO");
-    n += set_tex_path(&g->we, ln, "WE");
-    n += set_tex_path(&g->ea, ln, "EA");
-    n += set_tex_path(&g->no, ln, "NO");
-
-    if (ln[0] == 'C' && (ln[1] == ' ' || ln[1] == '\t'))
-    {
-        n += parse_rgb(ln, g->c);
-        g->c_rgba = rgb_to_mlx_rgba(g->c);
-    }
-    else if (ln[0] == 'F' && (ln[1] == ' ' || ln[1] == '\t'))
-    {
-        n += parse_rgb(ln, g->f);
-        g->f_rgba = rgb_to_mlx_rgba(g->f);
-    }
-    return (n);
+	n = 0;
+	n += set_tex_path(&g->so, ln, "SO");
+	n += set_tex_path(&g->we, ln, "WE");
+	n += set_tex_path(&g->ea, ln, "EA");
+	n += set_tex_path(&g->no, ln, "NO");
+	if (ln[0] == 'C' && (ln[1] == ' ' || ln[1] == '\t'))
+	{
+		n += parse_rgb(ln, g->c);
+		g->c_rgba = rgb_to_mlx_rgba(g->c);
+	}
+	else if (ln[0] == 'F' && (ln[1] == ' ' || ln[1] == '\t'))
+	{
+		n += parse_rgb(ln, g->f);
+		g->f_rgba = rgb_to_mlx_rgba(g->f);
+	}
+	return (n);
 }
 
 void	verify_tex_dup(t_game *g)
 {
-    if (!g->so || !g->no || !g->ea || !g->we)
-        err_exit_msg("Missing texture path!");
-    if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0)
-        || (ft_strncmp(g->so, g->ea, ft_strlen(g->so)) == 0)
-        || (ft_strncmp(g->so, g->we, ft_strlen(g->so)) == 0))
-        err_exit_msg("Duplicate texture detected!");
-    if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0)
-        || (ft_strncmp(g->no, g->we, ft_strlen(g->no)) == 0))
-        err_exit_msg("Duplicate texture detected!");
-    if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
-        err_exit_msg("Duplicate texture detected!");
+	if (!g->so || !g->no || !g->ea || !g->we)
+		err_exit_msg("Missing texture path!");
+	if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0) || (ft_strncmp(g->so,
+				g->ea, ft_strlen(g->so)) == 0) || (ft_strncmp(g->so, g->we,
+				ft_strlen(g->so)) == 0))
+		err_exit_msg("Duplicate texture detected!");
+	if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0) || (ft_strncmp(g->no,
+				g->we, ft_strlen(g->no)) == 0))
+		err_exit_msg("Duplicate texture detected!");
+	if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
+		err_exit_msg("Duplicate texture detected!");
 }
