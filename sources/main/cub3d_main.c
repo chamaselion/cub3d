@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 12:51:27 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:45:52 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (1);
 	init_game(&g, argv[1]);
-	// print the whole map
+	// print the whole map delete after testing
 	for (int i = 0; g.map[i]; i++)
 		printf("line %d: %s", i, g.map[i]);
 	printf("the path is: %s\n", g.no);

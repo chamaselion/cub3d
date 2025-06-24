@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   wall_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alima <alima@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:17 by alima             #+#    #+#             */
-/*   Updated: 2025/06/19 16:53:59 by alima            ###   ########.fr       */
+/*   Updated: 2025/06/24 23:43:34 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int check_top_bottom(t_game *game)
+int	check_top_bottom(t_game *game)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (x < game->width_map)
@@ -28,9 +28,9 @@ int check_top_bottom(t_game *game)
 	return (0);
 }
 
-int check_sides(t_game *game)
+int	check_sides(t_game *game)
 {
-	int y;
+	int	y;
 
 	y = 0;
 	while (y < game->height_map)
@@ -43,23 +43,28 @@ int check_sides(t_game *game)
 	}
 	return (0);
 }
-int check_near(t_game *game, int y, int x)
+
+int	check_near(t_game *game, int y, int x)
 {
-	if (y > 0 && !is_wall(game->map[y-1][x]) && !is_empty(game->map[y-1][x]))
+	if (y > 0 && !is_wall(game->map[y - 1][x]) && !is_empty(game->map[y
+			- 1][x]))
 		return (1);
-	if (y < game->height_map - 1 && !is_wall(game->map[y+1][x]) && !is_empty(game->map[y+1][x]))
+	if (y < game->height_map - 1 && !is_wall(game->map[y + 1][x])
+		&& !is_empty(game->map[y + 1][x]))
 		return (1);
-	if (x > 0 && !is_wall(game->map[y][x-1]) && !is_empty(game->map[y][x-1]))
+	if (x > 0 && !is_wall(game->map[y][x - 1]) && !is_empty(game->map[y][x
+			- 1]))
 		return (1);
-	if (x < game->width_map - 1 && !is_wall(game->map[y][x+1]) && !is_empty(game->map[y][x+1]))
+	if (x < game->width_map - 1 && !is_wall(game->map[y][x + 1])
+		&& !is_empty(game->map[y][x + 1]))
 		return (1);
 	return (0);
 }
 
-int check_interior(t_game *game)
+int	check_interior(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 1;
 	while (y < game->height_map - 1)
@@ -78,7 +83,7 @@ int check_interior(t_game *game)
 	return (0);
 }
 
-int check_walls(t_game *game)
+int	check_walls(t_game *game)
 {
 	if (check_top_bottom(game))
 		return (1);

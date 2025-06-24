@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:09:43 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/24 22:17:28 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:53:08 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	err_exit_msg(const char *msg)
 {
-    printf("Error! %s\n", msg);
-    exit(EXIT_FAILURE);
+	printf("Error! %s\n", msg);
+	exit(EXIT_FAILURE);
 }
+
 void	err_free_exit_msg(const char *msg, char **c)
 {
-    printf("Error! %s\n", msg);
-    free_alloc(c);
-    exit(EXIT_FAILURE);
+	printf("Error! %s\n", msg);
+	free_alloc(c);
+	exit(EXIT_FAILURE);
 }
