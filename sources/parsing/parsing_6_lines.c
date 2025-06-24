@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/23 13:48:04 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:04:00 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,28 @@ void	load_config(t_game *g)
 void	process_line(t_game *g, char *ln, int *conf6)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (ln[i] && !ft_isalpha(ln[i])) // skipping spaces, tabs and new lines until we find a letter
 		i++;
 	if (ln[i])
 	{
-		printf("Processing line: %s\n", ln); // debug print delete	
+		printf("Processing line: %s\n", ln);
 		*conf6 += parse_line(g, ln); // counting the variables we got
-		printf("conf6: %d\n", *conf6); // debug print delete	
+		printf("conf6: %d\n", *conf6);
 		if (*conf6 == 6)
 			return;
 	}
-	// if the is no letter in this line, we have two cases:
+	// if there is no letter in this line, we have two cases:
 	// 1. line is only spcases, or tabs or new lines: it is ok
 	// 2. line has some random characters like # or $ , this is not ok, we give error message
 	else
 	{
-		tmp = ln;
 		while (*ln)
 		{
-			if (*tmp != '\n' && *tmp != ' ' && *tmp != '\t')
-			   err_exit_msg("Invalid config line!");
-			tmp++;
+			if (*ln != '\n' && *ln != ' ' && *ln != '\t')
+			   err_exit_msg("Invalid line in config file!\n");
+			ln++;
 		}
 	}	
 }
@@ -75,10 +73,7 @@ int	set_tex_path(char **tex_path, char *ln, char *prefix)
 		while (prefix_pos[i + 2] == ' ' || prefix_pos[i + 2] == '\t')
 			i++;
 		if (*tex_path != NULL)
-		{
-			printf("Error! Duplicate texture definition!\n");
-			exit(EXIT_FAILURE);
-		}
+			err_exit_msg("Duplicate texture definition!\n");
 		*tex_path = ft_strdup(prefix_pos + (i + 2));
 		return (1);
 	}
@@ -106,33 +101,6 @@ int	parse_line(t_game *g, char *ln)
     }
     return (n);
 }
-
-// void	verify_tex_dup(t_game *g)
-// {
-// 	if (!g->so|| !g->no || !g->ea || !g->we)
-// 	{
-// 		printf("Error! Missing texture path!\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	if ((ft_strncmp(g->so, g->no, ft_strlen(g->so)) == 0)
-// 		|| (ft_strncmp(g->so, g->ea, ft_strlen(g->so)) == 0)
-// 		|| (ft_strncmp(g->so, g->we, ft_strlen(g->so)) == 0))
-// 	{
-// 		printf("Error! Duplicate texture detected!\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	if ((ft_strncmp(g->no, g->ea, ft_strlen(g->no)) == 0)
-// 		|| (ft_strncmp(g->no, g->we, ft_strlen(g->no)) == 0))
-// 	{
-// 		printf("Error! Duplicate texture detected!\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	if ((ft_strncmp(g->ea, g->we, ft_strlen(g->ea)) == 0))
-// 	{
-// 		printf("Error! Duplicate texture detected!\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
 
 void	verify_tex_dup(t_game *g)
 {
