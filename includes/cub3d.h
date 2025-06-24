@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/23 13:46:06 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:49:16 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void			verify_tex_dup(t_game *g);
 int				parse_line(t_game *g, char *ln);
 // parsing_rgb.c
 uint32_t		rgb_to_mlx_rgba(const int rgb[3]);
-int				parse_rgb(const char *ln, int *rgb);
+int				parse_rgb(const char *ln, int rgb[3]);
 //error_handling.c
 void			err_exit_msg(const char *msg);
 #endif
