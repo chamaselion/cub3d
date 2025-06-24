@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 16:49:16 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:19:16 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,9 @@ int				parse_line(t_game *g, char *ln);
 // parsing_rgb.c
 uint32_t		rgb_to_mlx_rgba(const int rgb[3]);
 int				parse_rgb(const char *ln, int rgb[3]);
+void			check_rgb_num(char **c);
+void			free_alloc(char **str);
 //error_handling.c
 void			err_exit_msg(const char *msg);
+void			err_free_exit_msg(const char *msg, char	**c);
 #endif
