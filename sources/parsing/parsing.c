@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/23 12:19:36 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:50:29 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,54 +28,77 @@ int	whitespaces(char *str)
 	return (0);
 }
 
-void	read_map(t_game *game, char *map)
+void	read_map(t_game *g, char *map)
 {
-	char	*reader;
+	char	*read;
 
 	if (ft_strlen(map) <= 4 || ft_strncmp(map + (ft_strlen(map) - 4), ".cub",
 			4))
+		err_exit_msg("Map name must end with .cub");
+	g->map_fd = open(map, O_RDONLY);
+	if (g->map_fd < 0)
+		err_exit_msg("Couldn't open the map!");
+	load_config(g);
+	read = get_next_line(g->map_fd);
+	while (whitespaces(read) == 0)
 	{
-		printf("Error! Map's name is not correct.\n");
-		exit(EXIT_FAILURE);
+		free(read);
+		read = get_next_line(g->map_fd);
 	}
-	game->map_fd = open(map, O_RDONLY);
-	if (game->map_fd < 0)
-	{
-		printf("Error! Couldn't open the map!\n");
-		exit(EXIT_FAILURE);
-	}
-	load_config(game);
-	reader = get_next_line(game->map_fd);
-	while (whitespaces(reader) == 0)
-	{
-		free(reader);
-		reader = get_next_line(game->map_fd);
-	}
-	fill_map(game, reader);
+	fill_map(g, read);
 }
 
 void	fill_map(t_game *game, char *reader)
 {
-	int	y;
+	int	y = 0;
 
-	y = 0;
 	game->map = ft_calloc(300, sizeof(char *));
-	game->width_map = ft_strlen(reader) - 1;
-	while (reader != NULL)
+	while (reader)
 	{
-		game->height_map++;
-		game->map[y] = ft_strdup(reader);
+		game->map[y++] = ft_strdup(reader);
 		free(reader);
 		reader = get_next_line(game->map_fd);
-		y++;
-		if (reader != NULL && whitespaces(reader) == 0)
-		{
-			free(reader);
-			game->map[y] = NULL;
-			break ;
-		}
+		game->height_map++;
+	}
+
+	while (y-- > 0 && whitespaces(game->map[y]) == 0)
+	{
+		free(game->map[y]);
+		game->map[y] = NULL;
+		game->height_map--;
 	}
 }
+//too long
+// void	fill_map(t_game *game, char *reader)
+// {
+// 	int	y;
+
+// 	y = 0;
+// 	game->map = ft_calloc(300, sizeof(char *));
+// 	if (!game->map)
+// 		exit(1);
+// 	while (reader != NULL)
+// 	{
+// 		game->map[y] = ft_strdup(reader);
+// 		free(reader);
+// 		reader = get_next_line(game->map_fd);
+// 		y++;
+// 		game->height_map++;
+// 	}
+// 	y -= 1; // start checking from last line
+// 	while (y >= 0)
+// 	{
+// 		if (whitespaces(game->map[y]) == 0)
+// 		{
+// 			free(game->map[y]);
+// 			game->map[y] = NULL;
+// 			game->height_map--;
+// 		}
+// 		else
+// 			break ;
+// 		y--;
+// 	}
+// }
 
 void	find_width(t_game *game)
 {
