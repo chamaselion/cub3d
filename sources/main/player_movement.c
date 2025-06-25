@@ -6,17 +6,25 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:43 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/04 00:00:47 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:27:12 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// void	move_player(t_data *d, float mx, float my)
+// {
+// 	if (d->map[(int)(d->py)][(int)(d->px + mx)] == '0')
+// 		d->px += mx;
+// 	if (d->map[(int)(d->py + my)][(int)(d->px)] == '0')
+// 		d->py += my;
+// }
+
 void	move_player(t_data *d, float mx, float my)
 {
-	if (d->map[(int)(d->py)][(int)(d->px + mx)] == '0')
+	if (can_fit_on(d->map[(int)(d->py)][(int)(d->px + mx)]))
 		d->px += mx;
-	if (d->map[(int)(d->py + my)][(int)(d->px)] == '0')
+	if (can_fit_on(d->map[(int)(d->py + my)][(int)(d->px)]))
 		d->py += my;
 }
 
@@ -56,10 +64,10 @@ void	key_hook(mlx_key_data_t kd, void *param)
 		mlx_close_window(d->mlx);
 }
 
-void	init_player(t_data *d, float start_x, float start_y, float dir_angle)
+void	init_player(t_data *d, int start_x, int start_y, float dir_angle)
 {
-	d->px = start_x;
-	d->py = start_y;
+	d->px = (float)start_x + 0.1;
+	d->py = (float)start_y + 0.1;
 	d->dx = cos(dir_angle);
 	d->dy = sin(dir_angle);
 	d->plx = -d->dy * 0.66;

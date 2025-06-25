@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 23:42:13 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/25 12:42:08 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,34 +62,29 @@ typedef struct s_textures
 	uint8_t			a;
 }					t_textures;
 
-typedef struct s_data
-{
-	mlx_t			*mlx;
-	mlx_image_t		*img;
-	t_textures		t;
-	float			px;
-	float			dx;
-	float			plx;
-	float			py;
-	float			dy;
-	float			ply;
-	t_keys			keys;
-	char			**map;
-}					t_data;
-
 typedef struct s_update_vars
 {
-	int x, y;
-	double cx, rx, ry;
-	int mx, my;
-	double sdx, sdy;
-	double ddx, ddy;
-	int stepx, stepy;
-	int hit, side; // side: 0 = NORTH, 1 = SOUTH, 2 = EAST, 3 = WEST
-	double			pwd;
-	int lh, ds, de;
-	uint32_t		col;
-}					t_update_vars;
+	int			x;
+	int			y;
+	double		cx;
+	double		rx;
+	double		ry;
+	int			mx;
+	int			my;
+	double		sdx;
+	double		sdy;
+	double		ddx;
+	double		ddy;
+	int			stepx;
+	int			stepy;
+	int			hit;
+	int			side;// side: 0 = NORTH, 1 = SOUTH, 2 = EAST, 3 = WEST
+	double		pwd;
+	int			lh;
+	int			ds;
+	int			de;
+	uint32_t	col;
+}				t_update_vars;
 
 typedef struct s_player
 {
@@ -117,15 +112,31 @@ typedef struct s_game
 	t_player		player;
 }					t_game;
 
+typedef struct s_data
+{
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_game			*g;
+	t_textures		t;
+	float			px;
+	float			dx;
+	float			plx;
+	float			py;
+	float			dy;
+	float			ply;
+	t_keys			keys;
+	char			**map;
+}					t_data;
+
 void				move_player(t_data *d, float mx, float my);
 void				rotate(t_data *d, float rs);
 void				key_hook(mlx_key_data_t kd, void *param);
 void				update(void *param);
-void				init_player(t_data *d, float start_x, float start_y,
+void				init_player(t_data *d, int start_x, int start_y,
 						float dir_angle);
 void				handle_player_input(t_data *d);
-void				draw_ceiling(mlx_image_t *img);
-void				draw_floor(mlx_image_t *img);
+void				draw_ceiling(mlx_image_t *img, uint32_t color);
+void				draw_floor(mlx_image_t *img, uint32_t color);
 void				calculate_ray_direction(t_data *d, t_update_vars *v, int x);
 void				setup_ray_steps(t_data *d, t_update_vars *v);
 void				perform_dda(t_data *d, t_update_vars *v);
@@ -151,7 +162,10 @@ char				*trim_map_line(char *line);
 void				free_char_array(char **array);
 int					init_game(t_game *g, char *argv1);
 int					trim_it(t_game *g, t_data *d);
-int					start_game(t_data *d);
+int					start_game(t_data *d, t_game *g);
+double				get_spawn_angle(char **map);
+void				init_keys(t_data *d);
+int					can_fit_on(char c);
 
 // char_validation
 int					is_valid_char(char c);

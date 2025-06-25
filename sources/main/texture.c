@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/04 16:29:11 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:40:28 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,14 @@ void	get_texture(t_data *d)
 	d->t.south_texture = mlx_load_png("textures/purplestone.png");
 	d->t.east_texture = mlx_load_png("textures/pillar.png");
 	d->t.west_texture = mlx_load_png("textures/wall_3.png");
-	if (!d->t.north_texture)
+	// d->t.north_texture = mlx_load_png(d->g->no);
+	// d->t.south_texture = mlx_load_png(d->g->so);
+	// d->t.east_texture = mlx_load_png(d->g->ea);
+	// d->t.west_texture = mlx_load_png(d->g->we);
+	if (!d->t.north_texture || !d->t.south_texture
+		|| !d->t.east_texture || !d->t.west_texture)
 	{
-		printf("Error: Failed to load texture from textures/bluestone.png\n");
-		exit(1);
-	}
-	if (!d->t.south_texture)
-	{
-		printf("Error: Failed to load texture from textures/bluestone.png\n");
-		exit(1);
-	}
-	if (!d->t.east_texture)
-	{
-		printf("Error: Failed to load texture from textures/bluestone.png\n");
-		exit(1);
-	}
-	if (!d->t.west_texture)
-	{
-		printf("Error: Failed to load texture from textures/bluestone.png\n");
+		printf("Error: Failed to load texture from the provided path");
 		exit(1);
 	}
 }
