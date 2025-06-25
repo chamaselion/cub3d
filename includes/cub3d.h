@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 13:48:41 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:09:48 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int					start_game(t_data *d, t_game *g);
 double				get_spawn_angle(char **map);
 void				init_keys(t_data *d);
 int					can_fit_on(char c);
+char				*trim_texture_path(char *path);
 
 // char_validation
 int					is_valid_char(char c);

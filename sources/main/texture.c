@@ -6,33 +6,43 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 18:40:28 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:08:44 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 void	get_texture(t_data *d)
 {
-	d->t.north_texture = mlx_load_png("textures/bluestone.png");
-	d->t.south_texture = mlx_load_png("textures/purplestone.png");
-	d->t.east_texture = mlx_load_png("textures/pillar.png");
-	d->t.west_texture = mlx_load_png("textures/wall_3.png");
-	// d->t.north_texture = mlx_load_png(d->g->no);
-	// d->t.south_texture = mlx_load_png(d->g->so);
-	// d->t.east_texture = mlx_load_png(d->g->ea);
-	// d->t.west_texture = mlx_load_png(d->g->we);
-	if (!d->t.north_texture || !d->t.south_texture
-		|| !d->t.east_texture || !d->t.west_texture)
+	char	*direction[4];
+
+	direction[0] = trim_texture_path(d->g->no);
+	direction[1] = trim_texture_path(d->g->so);
+	direction[2] = trim_texture_path(d->g->ea);
+	direction[3] = trim_texture_path(d->g->we);
+	if (!direction[0] || !direction[1] || !direction[2] || !direction[3])
 	{
-		printf("Error: Failed to load texture from the provided path");
+		printf("Error: Failed to allocate memory for texture paths\n");
+		exit(1);
+	}
+	d->t.north_texture = mlx_load_png(direction[0]);
+	d->t.south_texture = mlx_load_png(direction[1]);
+	d->t.east_texture = mlx_load_png(direction[2]);
+	d->t.west_texture = mlx_load_png(direction[3]);
+	free(direction[0]);
+	free(direction[1]);
+	free(direction[2]);
+	free(direction[3]);
+	if (!d->t.north_texture || !d->t.south_texture || !d->t.east_texture
+		|| !d->t.west_texture)
+	{
+		printf("Error: Failed to load texture from the provided path\n");
 		exit(1);
 	}
 }
 
 void	calculate_texture_x(t_data *d, t_update_vars *v, mlx_texture_t *texture,
-						double wall_x)
+		double wall_x)
 {
 	d->t.tex_x = (int)(wall_x * texture->width);
 	if (d->t.tex_x < 0)
@@ -59,7 +69,7 @@ void	render_texture_pixel(t_data *d, mlx_texture_t *texture, int x, int y)
 }
 
 void	render_texture_column(t_data *d, t_update_vars *v,
-					mlx_texture_t *texture, int x)
+		mlx_texture_t *texture, int x)
 {
 	double	step;
 
