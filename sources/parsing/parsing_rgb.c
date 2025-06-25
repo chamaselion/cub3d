@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:01:31 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/24 23:52:33 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:54:05 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	is_pure_digit(const char *str)
 	return (1);
 }
 
-// This ensures that there are exactly 3 components.
 void	check_rgb_num(char **c)
 {
 	int	count;
@@ -61,7 +60,6 @@ void	check_rgb_num(char **c)
 	}
 }
 
-// TODO shorter
 int	parse_rgb(const char *ln, int rgb[3])
 {
 	int		i;
@@ -74,8 +72,8 @@ int	parse_rgb(const char *ln, int rgb[3])
 		i++;
 	c = ft_split(ln + i, ',');
 	check_rgb_num(c);
-	i = 0;
-	while (c[i])
+	i = -1;
+	while (c[++i])
 	{
 		str = c[i];
 		while (*str == ' ' || *str == '\t')
@@ -87,8 +85,38 @@ int	parse_rgb(const char *ln, int rgb[3])
 		rgb[i] = ft_atoi(str);
 		if (!is_pure_digit(str) || rgb[i] < 0 || rgb[i] > 255)
 			err_free_exit_msg("Invalid RGB value", c);
-		i++;
 	}
-	free_alloc(c);
-	return (1);
+	return (free_alloc(c), 1);
 }
+
+// to long TODO shorter, delete after all
+// int	parse_rgb(const char *ln, int rgb[3])
+// {
+// 	int		i;
+// 	int		j;
+// 	char	**c;
+// 	char	*str;
+
+// 	i = 0;
+// 	while (ln[i] == ' ' || ft_isalpha(ln[i]))
+// 		i++;
+// 	c = ft_split(ln + i, ',');
+// 	check_rgb_num(c);
+// 	i = 0;
+// 	while (c[i])
+// 	{
+// 		str = c[i];
+// 		while (*str == ' ' || *str == '\t')
+// 			str++;
+// 		j = 0;
+// 		while (str[j] && str[j] != '\n' && str[j] != '\t' && str[j] != ' ')
+// 			j++;
+// 		str[j] = '\0';
+// 		rgb[i] = ft_atoi(str);
+// 		if (!is_pure_digit(str) || rgb[i] < 0 || rgb[i] > 255)
+// 			err_free_exit_msg("Invalid RGB value", c);
+// 		i++;
+// 	}
+// 	// free_alloc(c);
+// 	return (free_alloc(c), 1);
+// }
