@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:43 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 18:27:12 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:47:29 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 // void	move_player(t_data *d, float mx, float my)
 // {
-// 	if (d->map[(int)(d->py)][(int)(d->px + mx)] == '0')
+// 	if (d->g->map[(int)(d->py)][(int)(d->px + mx)] == '0')
 // 		d->px += mx;
-// 	if (d->map[(int)(d->py + my)][(int)(d->px)] == '0')
+// 	if (d->g->map[(int)(d->py + my)][(int)(d->px)] == '0')
 // 		d->py += my;
 // }
 
 void	move_player(t_data *d, float mx, float my)
 {
-	if (can_fit_on(d->map[(int)(d->py)][(int)(d->px + mx)]))
+	if (can_fit_on(d->g->map[(int)(d->py)][(int)(d->px + mx)]))
 		d->px += mx;
-	if (can_fit_on(d->map[(int)(d->py + my)][(int)(d->px)]))
+	if (can_fit_on(d->g->map[(int)(d->py + my)][(int)(d->px)]))
 		d->py += my;
 }
 

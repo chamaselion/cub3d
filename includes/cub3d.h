@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 12:42:08 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:48:41 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ typedef struct s_data
 	float			dy;
 	float			ply;
 	t_keys			keys;
-	char			**map;
 }					t_data;
 
 void				move_player(t_data *d, float mx, float my);

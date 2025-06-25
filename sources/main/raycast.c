@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:53 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/04 00:00:54 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:47:29 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	perform_dda(t_data *d, t_update_vars *v)
 			else
 				v->side = 1;
 		}
-		if (d->map[v->my][v->mx] == '1')
+		if (d->g->map[v->my][v->mx] == '1')
 			v->hit = 1;
 	}
 }
