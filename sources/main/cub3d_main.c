@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 12:40:53 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:28:49 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int	start_game(t_data *d, t_game *g)
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(d->mlx, d->img, 0, 0);
 	get_texture(d);
-	init_player(d, 5, 5, get_spawn_angle(d->map));
+	init_player(d, 2, 2, get_spawn_angle(d->map));
 	init_keys(d);
 	mlx_key_hook(d->mlx, key_hook, d);
 	mlx_close_hook(d->mlx, (void (*)(void *))mlx_close_window, d->mlx);
-	cast_rays(d);
 	mlx_loop_hook(d->mlx, update, d);
 	mlx_loop(d->mlx);
 	mlx_terminate(d->mlx);
@@ -44,7 +43,7 @@ int	init_game(t_game *g, char *argv1)
 	g->player = (t_player){0};
 	g->width_map = 0;
 	g->x = 0;
-	g->x = 0;
+	g->y = 0;
 	g->so = NULL;
 	g->no = NULL;
 	g->we = NULL;
@@ -94,8 +93,8 @@ int	main(int argc, char **argv)
 	// print the colors
 	printf("the color is: %d %d %d\n", g.c[0], g.c[1], g.c[2]);
 	printf("the floor is: %d %d %d\n", g.f[0], g.f[1], g.f[2]);
-	validate_map(&g);
-	// trim_it(&g, &d);
+	// validate_map(&g);
+	trim_it(&g, &d);
 	start_game(&d, &g);
 	return (EXIT_SUCCESS);
 }
