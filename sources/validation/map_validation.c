@@ -3,50 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:37 by alima             #+#    #+#             */
-/*   Updated: 2025/06/26 17:15:37 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 23:27:03 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	check_player_number(t_game *g, int nb)
+void	check_player_number(int nb)
 {
 	if (nb == 0)
-	{
-		printf("No player character found\n");
-		free(g->start);
-		exit(EXIT_FAILURE);
-	}
+		err_exit_msg("No player character found");
 	if (nb > 1)
-	{
-		printf("Multiple player characters found\n");
-		free(g->start);
-		exit(EXIT_FAILURE);
-	}
+		err_exit_msg("Multiple player characters found");
 }
 
-// static void	free_map(t_game *game)
-// {
-// 	int	i;
-
-// 	if (!game->map)
-// 		return ;
-// 	i = 0;
-// 	while (i < game->height_map)
-// 	{
-// 		if (game->map[i])
-// 			free(game->map[i]);
-// 		i++;
-// 	}
-// 	free(game->map);
-// 	game->map = NULL;
-// }
-
-
-void find_player_pos(t_game *g)
+void	find_player_pos(t_game *g)
 {
 	int	x;
 	int	y;
@@ -54,7 +28,6 @@ void find_player_pos(t_game *g)
 
 	y = -1;
 	nb = 0;
-	g->start = malloc(sizeof(int) * 2);
 	while (g->map[++y] != NULL)
 	{
 		x = -1;
@@ -62,24 +35,41 @@ void find_player_pos(t_game *g)
 		{
 			if (ft_isalpha(g->map[y][x]))
 			{
-				if (is_player(g->map[y][x])) // Check return value
+				if (is_player(g->map[y][x]))
 				{
-					g->pos = g->map[y][x];	
-					g->start[0] = y;
-					g->start[1] = x;
+					g->pos = g->map[y][x];
+					g->player.y = y;
+					g->player.x = x;
 					nb++;
 				}
 			}
 		}
 	}
-	check_player_number(g, nb);
+	check_player_number(nb);
 }
 
 void	validate_map(t_game *g)
 {
+	char	**map_copy;
+	int		i;
+	int		len;
+
 	find_width(g);
 	find_player_pos(g);
-	check_sides(g, g->start[0], g->start[1]);
-	valid_walls(g, g->map, g->start[0], g->start[1]);
-	// normalize_spaces(g);
+	check_sides(g, g->player.y, g->player.x);
+	i = 0;
+	while (g->map[i] != NULL)
+		i++;
+	map_copy = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (g->map[i] != NULL)
+	{
+		len = ft_strlen(g->map[i]);
+		map_copy[i] = malloc(sizeof(char) * (len + 1));
+		ft_memcpy(map_copy[i], g->map[i], len + 1);
+		i++;
+	}
+	map_copy[i] = NULL;
+	valid_walls(g, map_copy, g->player.y, g->player.x);
+	free_char_array(map_copy);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/24 23:30:02 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 21:20:44 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	read_map(t_game *g, char *map)
 		err_exit_msg("Couldn't open the map!");
 	load_config(g);
 	read = get_next_line(g->map_fd);
-	while (whitespaces(read) == 0)
+	if (!read)
+		err_exit_msg("Have no map content!");
+	while (read && whitespaces(read) == 0)
 	{
 		free(read);
 		read = get_next_line(g->map_fd);
@@ -113,7 +115,8 @@ void	find_width(t_game *game)
 		x = 0;
 		while (game->map[y][x] != '\0')
 			x++;
-		while (game->map[y][x - 1] == ' ' || game->map[y][x - 1] == '\n')
+		while (x > 0 && (game->map[y][x - 1] == ' '
+			|| game->map[y][x - 1] == '\n'))
 			x--;
 		if (x > tmp)
 			tmp = x;

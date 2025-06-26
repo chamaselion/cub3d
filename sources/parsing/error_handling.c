@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:09:43 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/24 23:53:08 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 23:20:50 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	err_exit_msg(const char *msg)
+void	err_exit_msg(char *msg)
 {
-	printf("Error! %s\n", msg);
+	ft_putstr_fd("Error! ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
 }
 
-void	err_free_exit_msg(const char *msg, char **c)
+void	err_free_exit_msg(char *msg, char **c)
 {
-	printf("Error! %s\n", msg);
+	ft_putstr_fd("Error! ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	free_alloc(c);
 	exit(EXIT_FAILURE);
 }

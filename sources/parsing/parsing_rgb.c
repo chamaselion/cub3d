@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_rgb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:01:31 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/25 14:54:05 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 23:25:34 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 uint32_t	rgb_to_mlx_rgba(const int rgb[3])
 {
-	return (((uint32_t)rgb[0] << 24) | ((uint32_t)rgb[1] << 16) | ((uint32_t)rgb[2] << 8) | 255);
+	return (((uint32_t)rgb[0] << 24) | ((uint32_t)rgb[1] << 16)
+		| ((uint32_t)rgb[2] << 8) | 255);
 }
 
 void	free_alloc(char **str)
@@ -53,11 +54,7 @@ void	check_rgb_num(char **c)
 	while (c[count])
 		count++;
 	if (count != 3)
-	{
-		printf("Error! RGB must have exactly 3 numbers\n");
-		free_alloc(c);
-		exit(EXIT_FAILURE);
-	}
+		err_free_exit_msg("RGB must have exactly 3 numbers", c);
 }
 
 int	parse_rgb(const char *ln, int rgb[3])
@@ -88,35 +85,3 @@ int	parse_rgb(const char *ln, int rgb[3])
 	}
 	return (free_alloc(c), 1);
 }
-
-// to long TODO shorter, delete after all
-// int	parse_rgb(const char *ln, int rgb[3])
-// {
-// 	int		i;
-// 	int		j;
-// 	char	**c;
-// 	char	*str;
-
-// 	i = 0;
-// 	while (ln[i] == ' ' || ft_isalpha(ln[i]))
-// 		i++;
-// 	c = ft_split(ln + i, ',');
-// 	check_rgb_num(c);
-// 	i = 0;
-// 	while (c[i])
-// 	{
-// 		str = c[i];
-// 		while (*str == ' ' || *str == '\t')
-// 			str++;
-// 		j = 0;
-// 		while (str[j] && str[j] != '\n' && str[j] != '\t' && str[j] != ' ')
-// 			j++;
-// 		str[j] = '\0';
-// 		rgb[i] = ft_atoi(str);
-// 		if (!is_pure_digit(str) || rgb[i] < 0 || rgb[i] > 255)
-// 			err_free_exit_msg("Invalid RGB value", c);
-// 		i++;
-// 	}
-// 	// free_alloc(c);
-// 	return (free_alloc(c), 1);
-// }

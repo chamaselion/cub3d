@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_6_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/24 23:44:29 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 23:25:07 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	load_config(t_game *g)
 			break ;
 		ln = get_next_line(g->map_fd);
 	}
-	// verify_tex_dup(g);
-	// load_tex(d);
 }
 
 void	process_line(t_game *g, char *ln, int *conf6)
@@ -40,9 +38,7 @@ void	process_line(t_game *g, char *ln, int *conf6)
 		i++;
 	if (ln[i])
 	{
-		printf("Processing line: %s\n", ln);
 		*conf6 += parse_line(g, ln);
-		printf("conf6: %d\n", *conf6);
 		if (*conf6 == 6)
 			return ;
 	}
@@ -51,7 +47,7 @@ void	process_line(t_game *g, char *ln, int *conf6)
 		while (*ln)
 		{
 			if (*ln != '\n' && *ln != ' ' && *ln != '\t')
-				err_exit_msg("Invalid line in config file!\n");
+				err_exit_msg("Invalid line in config file!");
 			ln++;
 		}
 	}
@@ -70,7 +66,7 @@ int	set_tex_path(char **tex_path, char *ln, char *prefix)
 		while (prefix_pos[i + 2] == ' ' || prefix_pos[i + 2] == '\t')
 			i++;
 		if (*tex_path != NULL)
-			err_exit_msg("Duplicate texture definition!\n");
+			err_exit_msg("Duplicate texture definition!");
 		*tex_path = ft_strdup(prefix_pos + (i + 2));
 		return (1);
 	}
@@ -80,20 +76,24 @@ int	set_tex_path(char **tex_path, char *ln, char *prefix)
 int	parse_line(t_game *g, char *ln)
 {
 	int	n;
+	int	i;
 
 	n = 0;
+	i = 0;
 	n += set_tex_path(&g->so, ln, "SO");
 	n += set_tex_path(&g->we, ln, "WE");
 	n += set_tex_path(&g->ea, ln, "EA");
 	n += set_tex_path(&g->no, ln, "NO");
-	if (ln[0] == 'C' && (ln[1] == ' ' || ln[1] == '\t'))
+	while (ln[i] == ' ' || ln[i] == '\t')
+		i++;
+	if (ln[i] == 'C' && (ln[i + 1] == ' ' || ln[i + 1] == '\t'))
 	{
-		n += parse_rgb(ln, g->c);
+		n += parse_rgb(ln + i, g->c);
 		g->c_rgba = rgb_to_mlx_rgba(g->c);
 	}
-	else if (ln[0] == 'F' && (ln[1] == ' ' || ln[1] == '\t'))
+	else if (ln[i] == 'F' && (ln[i + 1] == ' ' || ln[i + 1] == '\t'))
 	{
-		n += parse_rgb(ln, g->f);
+		n += parse_rgb(ln + i, g->f);
 		g->f_rgba = rgb_to_mlx_rgba(g->f);
 	}
 	return (n);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 17:00:22 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 23:28:13 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
 # define EAST 0
-# define NORTH M_PI_2
+# define NORTH 4.71238898038469 // Approximation of 3 * π / 2
 # define WEST M_PI
-# define SOUTH 4.71238898038469 // Approximation of 3 * π / 2
+# define SOUTH M_PI_2 
 
 typedef struct s_keys
 {
@@ -101,7 +101,6 @@ typedef struct s_game
 	char			*we;
 	char			*ea;
 	char			pos;
-	int				*start;
 	int				c[3];
 	int				f[3];
 	int				x;
@@ -176,15 +175,15 @@ void				calculate_wall_distance(t_data *d, t_update_vars *v);
 int					is_valid_char(char c);
 int					is_wall(char c);
 int					is_empty(char c);
-int 				is_player(char c);
+int					is_player(char c);
 void				normalize_spaces(t_game *game);
 // map_validation
-void				check_player_number(t_game *g, int nb);
+void				check_player_number(int nb);
 void				find_player_pos(t_game *g);
 void				validate_map(t_game *g);
 // wall_validation
-void				check_sides(t_game *g, int x, int y);
-void				valid_walls(t_game *g, char **map, int x, int y);
+void				check_sides(t_game *g, int y, int x);
+void				valid_walls(t_game *g, char **map, int y, int x);
 // int					check_walls(t_game *game);
 // parsing
 int					whitespaces(char *str);
@@ -206,6 +205,6 @@ int					parse_rgb(const char *ln, int rgb[3]);
 void				check_rgb_num(char **c);
 void				free_alloc(char **str);
 // error_handling.c
-void				err_exit_msg(const char *msg);
-void				err_free_exit_msg(const char *msg, char **c);
+void				err_exit_msg(char *msg);
+void				err_free_exit_msg(char *msg, char **c);
 #endif
