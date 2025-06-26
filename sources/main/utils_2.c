@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:09:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 11:24:24 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:40:04 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ char	*trim_texture_path(char *path)
 	return (trimmed);
 }
 
+void	freexit_textures(t_data *d, int i)
+{
+	if (d->t.north_texture)
+		mlx_delete_texture(d->t.north_texture);
+	if (d->t.south_texture)
+		mlx_delete_texture(d->t.south_texture);
+	if (d->t.east_texture)
+		mlx_delete_texture(d->t.east_texture);
+	if (d->t.west_texture)
+		mlx_delete_texture(d->t.west_texture);
+	exit(i);
+}
+
 void	freexit(int i, t_data *d)
 {
 	t_game	*g;
@@ -55,18 +68,10 @@ void	freexit(int i, t_data *d)
 			if (g->map_fd >= 0)
 				close(g->map_fd);
 		}
-		if (d->t.north_texture)
-			mlx_delete_texture(d->t.north_texture);
-		if (d->t.south_texture)
-			mlx_delete_texture(d->t.south_texture);
-		if (d->t.east_texture)
-			mlx_delete_texture(d->t.east_texture);
-		if (d->t.west_texture)
-			mlx_delete_texture(d->t.west_texture);
 		if (d->mlx)
 			mlx_terminate(d->mlx);
+		freexit_textures(d, i);
 	}
-	exit(i);
 }
 
 void	init_data(t_data *d)
@@ -95,4 +100,12 @@ void	init_data(t_data *d)
 	d->dy = 0.0;
 	d->ply = 0.0;
 	init_keys(d);
+}
+
+void	calculate_wall_distance(t_data *d, t_update_vars *v)
+{
+	if (v->side == 2 || v->side == 3)
+		v->pwd = (v->mx - d->px + (1 - v->stepx) / 2) / v->rx;
+	else
+		v->pwd = (v->my - d->py + (1 - v->stepy) / 2) / v->ry;
 }

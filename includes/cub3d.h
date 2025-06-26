@@ -168,6 +168,7 @@ int					can_fit_on(char c);
 char				*trim_texture_path(char *path);
 void				freexit(int i, t_data *d);
 void				init_data(t_data *d);
+void				calculate_wall_distance(t_data *d, t_update_vars *v);
 
 // char_validation
 int					is_valid_char(char c);
@@ -178,6 +179,7 @@ void				normalize_spaces(t_game *game);
 int					check_player_number(t_game *game);
 void				check_validity(t_game *game);
 void				validate_map(t_game *game);
+int					validate_flood_fill(t_game *game);
 // wall_validation
 int					check_top_bottom(t_game *game);
 int					check_sides(t_game *game);

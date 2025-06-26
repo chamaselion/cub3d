@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:53 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 13:47:29 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:33:51 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,40 +47,43 @@ void	setup_ray_steps(t_data *d, t_update_vars *v)
 	}
 }
 
+void	update_side(t_update_vars *v, int is_x)
+{
+	if (is_x)
+	{
+		v->ddx += v->sdx;
+		v->mx += v->stepx;
+		if (v->stepx < 0)
+			v->side = 3;
+		else
+			v->side = 2;
+	}
+	else
+	{
+		v->ddy += v->sdy;
+		v->my += v->stepy;
+		if (v->stepy < 0)
+			v->side = 0;
+		else
+			v->side = 1;
+	}
+}
+
 void	perform_dda(t_data *d, t_update_vars *v)
 {
 	v->hit = 0;
 	while (v->hit == 0)
 	{
 		if (v->ddx < v->ddy)
-		{
-			v->ddx += v->sdx;
-			v->mx += v->stepx;
-			if (v->stepx < 0)
-				v->side = 3;
-			else
-				v->side = 2;
-		}
+			update_side(v, 1);
 		else
-		{
-			v->ddy += v->sdy;
-			v->my += v->stepy;
-			if (v->stepy < 0)
-				v->side = 0;
-			else
-				v->side = 1;
-		}
+			update_side(v, 0);
+		if (v->mx < 0 || v->my < 0 || v->mx >= d->g->width_map
+			|| v->my >= d->g->height_map)
+			break ;
 		if (d->g->map[v->my][v->mx] == '1')
 			v->hit = 1;
 	}
-}
-
-void	calculate_wall_distance(t_data *d, t_update_vars *v)
-{
-	if (v->side == 2 || v->side == 3)
-		v->pwd = (v->mx - d->px + (1 - v->stepx) / 2) / v->rx;
-	else
-		v->pwd = (v->my - d->py + (1 - v->stepy) / 2) / v->ry;
 }
 
 void	cast_rays(t_data *d)

@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:43 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 13:47:29 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:26:21 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,27 @@
 
 void	move_player(t_data *d, float mx, float my)
 {
-	if (can_fit_on(d->g->map[(int)(d->py)][(int)(d->px + mx)]))
-		d->px += mx;
-	if (can_fit_on(d->g->map[(int)(d->py + my)][(int)(d->px)]))
-		d->py += my;
+	int	new_px;
+	int	new_py;
+	int	map_w;
+	int	map_h;
+
+	new_px = (int)(d->px + mx);
+	new_py = (int)(d->py + my);
+	map_w = d->g->width_map;
+	map_h = d->g->height_map;
+	if (new_px >= 0 && new_px < map_w && (int)(d->py) >= 0
+		&& (int)(d->py) < map_h)
+	{
+		if (can_fit_on(d->g->map[(int)(d->py)][new_px]))
+			d->px += mx;
+	}
+	if (new_py >= 0 && new_py < map_h && (int)(d->px) >= 0
+		&& (int)(d->px) < map_w)
+	{
+		if (can_fit_on(d->g->map[new_py][(int)(d->px)]))
+			d->py += my;
+	}
 }
 
 void	rotate(t_data *d, float rs)
