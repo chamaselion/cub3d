@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:45:27 by alima             #+#    #+#             */
-/*   Updated: 2025/06/24 23:35:13 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:17:53 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ int	is_empty(char c)
 {
 	return (c == '0' || c == ' ' || c == 'N' || c == 'S' || c == 'E'
 		|| c == 'W');
+}
+
+int	is_player(char c)
+{
+	if (c != 'N' && c != 'E' && c != 'W' && c != 'S')
+	{
+		err_exit_msg("Wrong player character!");
+		return (0);
+	}
+	return (1);
 }
 
 void	normalize_spaces(t_game *game)

@@ -6,71 +6,80 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:37 by alima             #+#    #+#             */
-/*   Updated: 2025/06/24 23:43:52 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:15:37 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_player_number(t_game *game)
+void	check_player_number(t_game *g, int nb)
 {
-	int	x;
-	int	y;
-	int	counter;
-
-	x = 0;
-	y = 0;
-	counter = 0;
-	while (y < game->height_map)
+	if (nb == 0)
 	{
-		x = 0;
-		while (x < game->width_map)
-		{
-			if (game->map[y][x] == 'W' || game->map[y][x] == 'N'
-				|| game->map[y][x] == 'S' || game->map[y][x] == 'E')
-				counter++;
-			x++;
-		}
-		y++;
+		printf("No player character found\n");
+		free(g->start);
+		exit(EXIT_FAILURE);
 	}
-	if (counter == 1)
-		return (0);
-	return (1);
-}
-
-static void	free_map(t_game *game)
-{
-	int	i;
-
-	if (!game->map)
-		return ;
-	i = 0;
-	while (i < game->height_map)
+	if (nb > 1)
 	{
-		if (game->map[i])
-			free(game->map[i]);
-		i++;
-	}
-	free(game->map);
-	game->map = NULL;
-}
-
-void	check_validity(t_game *game)
-{
-	int	checker;
-
-	checker = check_walls(game);
-	checker += check_player_number(game);
-	if (checker != 0)
-	{
-		printf("Map validation failed\n");
-		free_map(game);
+		printf("Multiple player characters found\n");
+		free(g->start);
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	validate_map(t_game *game)
+// static void	free_map(t_game *game)
+// {
+// 	int	i;
+
+// 	if (!game->map)
+// 		return ;
+// 	i = 0;
+// 	while (i < game->height_map)
+// 	{
+// 		if (game->map[i])
+// 			free(game->map[i]);
+// 		i++;
+// 	}
+// 	free(game->map);
+// 	game->map = NULL;
+// }
+
+
+void find_player_pos(t_game *g)
 {
-	normalize_spaces(game);
-	check_validity(game);
+	int	x;
+	int	y;
+	int	nb;
+
+	y = -1;
+	nb = 0;
+	g->start = malloc(sizeof(int) * 2);
+	while (g->map[++y] != NULL)
+	{
+		x = -1;
+		while (g->map[y][++x] != '\0')
+		{
+			if (ft_isalpha(g->map[y][x]))
+			{
+				if (is_player(g->map[y][x])) // Check return value
+				{
+					g->pos = g->map[y][x];	
+					g->start[0] = y;
+					g->start[1] = x;
+					nb++;
+				}
+			}
+		}
+	}
+	check_player_number(g, nb);
+}
+
+void	validate_map(t_game *g)
+{
+	find_width(g);
+	find_player_pos(g);
+	check_sides(g, g->start[0], g->start[1]);
+	valid_walls(g, g->map, g->start[0], g->start[1]);
+	// normalize_spaces(g);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 11:39:10 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:00:22 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_game
 	char			*no;
 	char			*we;
 	char			*ea;
+	char			pos;
+	int				*start;
 	int				c[3];
 	int				f[3];
 	int				x;
@@ -174,22 +176,21 @@ void				calculate_wall_distance(t_data *d, t_update_vars *v);
 int					is_valid_char(char c);
 int					is_wall(char c);
 int					is_empty(char c);
+int 				is_player(char c);
 void				normalize_spaces(t_game *game);
 // map_validation
-int					check_player_number(t_game *game);
-void				check_validity(t_game *game);
-void				validate_map(t_game *game);
-int					validate_flood_fill(t_game *game);
+void				check_player_number(t_game *g, int nb);
+void				find_player_pos(t_game *g);
+void				validate_map(t_game *g);
 // wall_validation
-int					check_top_bottom(t_game *game);
-int					check_sides(t_game *game);
-int					check_near(t_game *game, int y, int x);
-int					check_interior(t_game *game);
-int					check_walls(t_game *game);
+void				check_sides(t_game *g, int x, int y);
+void				valid_walls(t_game *g, char **map, int x, int y);
+// int					check_walls(t_game *game);
 // parsing
 int					whitespaces(char *str);
 void				read_map(t_game *game, char *map);
 void				fill_map(t_game *game, char *reader);
+int					get_width_with_whitespaces(char *row);
 void				find_width(t_game *game);
 // parsing_6_lines.c
 int					set_tex_path(char **tex_path, char *ln, char *prefix);
