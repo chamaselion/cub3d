@@ -6,32 +6,36 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 13:47:50 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:36:42 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	start_game(t_data *d, t_game *g)
+void	start_game(t_data *d, t_game *g)
 {
 	d->g = g;
-	d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
-	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(d->mlx, d->img, 0, 0);
 	get_texture(d);
 	init_player(d, 2, 2, get_spawn_angle(d->g->map));
 	init_keys(d);
+	d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	if (!d->mlx)
+		return (printf("Error: Failed to initialize MLX\n"),
+			freexit(EXIT_FAILURE, d));
+	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
+	if (!d->img)
+		return (printf("Error: Failed to create image\n"),
+			freexit(EXIT_FAILURE, d));
+	if (mlx_image_to_window(d->mlx, d->img, 0, 0) < 0)
+		return (printf("Error: Failed to attach image to window\n"),
+			freexit(EXIT_FAILURE, d));
 	mlx_key_hook(d->mlx, key_hook, d);
 	mlx_close_hook(d->mlx, (void (*)(void *))mlx_close_window, d->mlx);
-	mlx_loop_hook(d->mlx, update, d);
+	if (!mlx_loop_hook(d->mlx, update, d))
+		return (printf("Error: Failed to enter loop\n"),
+			freexit(EXIT_FAILURE, d));
 	mlx_loop(d->mlx);
-	mlx_terminate(d->mlx);
-	mlx_delete_texture(d->t.north_texture);
-	mlx_delete_texture(d->t.south_texture);
-	mlx_delete_texture(d->t.east_texture);
-	mlx_delete_texture(d->t.west_texture);
-	free_char_array(d->g->map);
-	return (0);
+	freexit(EXIT_SUCCESS, d);
 }
 
 int	init_game(t_game *g, char *argv1)
@@ -82,6 +86,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
+	init_data(&d);
 	init_game(&g, argv[1]);
 	// print the whole map delete after testing
 	for (int i = 0; g.map[i]; i++)
@@ -93,7 +98,7 @@ int	main(int argc, char **argv)
 	// print the colors
 	printf("the color is: %d %d %d\n", g.c[0], g.c[1], g.c[2]);
 	printf("the floor is: %d %d %d\n", g.f[0], g.f[1], g.f[2]);
-	// validate_map(&g);
+	validate_map(&g);
 	// trim_it(&g, &d);
 	start_game(&d, &g);
 	return (EXIT_SUCCESS);

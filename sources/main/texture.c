@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:44 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:54:14 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_texture(t_data *d)
 	if (!direction[0] || !direction[1] || !direction[2] || !direction[3])
 	{
 		printf("Error: Failed to allocate memory for texture paths\n");
-		exit(1);
+		freexit(1, d);
 	}
 	d->t.north_texture = mlx_load_png(direction[0]);
 	d->t.south_texture = mlx_load_png(direction[1]);
@@ -37,7 +37,7 @@ void	get_texture(t_data *d)
 		|| !d->t.west_texture)
 	{
 		printf("Error: Failed to load texture from the provided path\n");
-		exit(1);
+		freexit(1, d);
 	}
 }
 
