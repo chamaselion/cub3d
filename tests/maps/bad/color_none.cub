@@ -3,11 +3,16 @@ SO textures/purplestone.png
 WE textures/wall_3.png
 EA textures/pillar.png
 
-F 220,100,0
-C 225,30,0
-
 11111
 10001
+10S01
 10001
-10N01
+10001
+10001
+11001
+10001
+10001
+10001
+10001
+10001
 11111
