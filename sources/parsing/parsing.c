@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/27 11:34:57 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:31:47 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,37 +72,6 @@ void	fill_map(t_game *game, char *reader)
 		game->height_map--;
 	}
 }
-// too long
-//  void	fill_map(t_game *game, char *reader)
-//  {
-//  	int	y;
-
-// 	y = 0;
-// 	game->map = ft_calloc(300, sizeof(char *));
-// 	if (!game->map)
-// 		exit(1);
-// 	while (reader != NULL)
-// 	{
-// 		game->map[y] = ft_strdup(reader);
-// 		free(reader);
-// 		reader = get_next_line(game->map_fd);
-// 		y++;
-// 		game->height_map++;
-// 	}
-// 	y -= 1; // start checking from last line
-// 	while (y >= 0)
-// 	{
-// 		if (whitespaces(game->map[y]) == 0)
-// 		{
-// 			free(game->map[y]);
-// 			game->map[y] = NULL;
-// 			game->height_map--;
-// 		}
-// 		else
-// 			break ;
-// 		y--;
-// 	}
-// }
 
 void	find_width(t_game *game)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/27 13:13:46 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:30:26 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int					is_valid_char(char c);
 int					is_wall(char c);
 int					is_empty(char c);
 int					is_player(char c);
-void				normalize_spaces(t_game *game);
 // map_validation
 void				check_player_number(int nb);
 void				find_player_pos(t_game *g);

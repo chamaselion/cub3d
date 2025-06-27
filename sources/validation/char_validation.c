@@ -6,7 +6,7 @@
 /*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:45:27 by alima             #+#    #+#             */
-/*   Updated: 2025/06/26 17:17:53 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:31:56 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,4 @@ int	is_player(char c)
 		return (0);
 	}
 	return (1);
-}
-
-void	normalize_spaces(t_game *game)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < game->height_map)
-	{
-		x = 0;
-		while (x < game->width_map)
-		{
-			if (game->map[y][x] == ' ')
-				game->map[y][x] = '0';
-			x++;
-		}
-		y++;
-	}
 }

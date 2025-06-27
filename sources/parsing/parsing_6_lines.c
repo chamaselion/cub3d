@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_6_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
+/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/27 11:55:47 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:07:18 by aokhapki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	load_config(t_game *g)
 			break ;
 		ln = get_next_line(g->map_fd);
 	}
+	verify_tex_dup(g);
 }
 
 void	process_line(t_game *g, char *ln, int *conf6)
