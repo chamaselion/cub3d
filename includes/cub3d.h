@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/02/19 12:13:15 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:54:38 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,192 @@
 # define CUB3D_H
 
 # include "MLX42/MLX42.h"
+# include "libft.h"
+# include <fcntl.h>
 # include <math.h>
-# include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 1000
 # define CEILING_COLOR 0x303030FF
 # define FLOOR_COLOR 0x606060FF
-# define WALL_NORTH_SOUTH 0x0000FFFF
-# define WALL_EAST_WEST 0xFFFFFFFF
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
+# define EAST 0
+# define NORTH 4.71238898038469 // Approximation of 3 * π / 2
+# define WEST M_PI
+# define SOUTH M_PI_2 
 
 typedef struct s_keys
 {
-	bool	d;
-	bool	s;
-	bool	a;
-	bool	w;
-	bool	left;
-	bool	right;
-}				t_keys;
+	bool			d;
+	bool			s;
+	bool			a;
+	bool			w;
+	bool			left;
+	bool			right;
+}					t_keys;
 
-typedef struct s_data
+typedef struct s_textures
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	float		px;
-	float		dx;
-	float		plx;
-	float		py;
-	float		dy;
-	float		ply;
-	t_keys		keys;
-	int			map[5][5];
-}				t_data;
+	mlx_texture_t	*south_texture;
+	mlx_texture_t	*north_texture;
+	mlx_texture_t	*east_texture;
+	mlx_texture_t	*west_texture;
+	double			tex_pos;
+	int				tex_x;
+	int				tex_y;
+	uint32_t		color;
+	uint8_t			r;
+	uint8_t			g;
+	uint8_t			b;
+	uint8_t			a;
+}					t_textures;
 
 typedef struct s_update_vars
 {
-    int			x, y;
-    double		cx, rx, ry;
-    int			mx, my;
-    double		sdx, sdy;
-    double		ddx, ddy;
-    int			stepx, stepy;
-    int			hit, side;
-    double		pwd;
-    int			lh, ds, de;
-    uint32_t	col;
+	int			x;
+	int			y;
+	double		cx;
+	double		rx;
+	double		ry;
+	int			mx;
+	int			my;
+	double		sdx;
+	double		sdy;
+	double		ddx;
+	double		ddy;
+	int			stepx;
+	int			stepy;
+	int			hit;
+	int			side;// side: 0 = NORTH, 1 = SOUTH, 2 = EAST, 3 = WEST
+	double		pwd;
+	int			lh;
+	int			ds;
+	int			de;
+	uint32_t	col;
 }				t_update_vars;
 
-void			move_player(t_data *d, float mx, float my);
-void			rotate(t_data *d, float rs);
-void			key_hook(mlx_key_data_t kd, void *param);
-void			update(void *param);
+typedef struct s_player
+{
+	int				x;
+	int				y;
+}					t_player;
 
+typedef struct s_game
+{
+	void			*mlx;
+	char			**map;
+	char			*so;
+	char			*no;
+	char			*we;
+	char			*ea;
+	char			pos;
+	int				c[3];
+	int				f[3];
+	int				x;
+	int				y;
+	int				map_fd;
+	int				height_map;
+	int				width_map;
+	uint32_t		c_rgba;
+	uint32_t		f_rgba;
+	t_player		player;
+}					t_game;
+
+typedef struct s_data
+{
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_game			*g;
+	t_textures		t;
+	float			px;
+	float			dx;
+	float			plx;
+	float			py;
+	float			dy;
+	float			ply;
+	t_keys			keys;
+}					t_data;
+
+void				move_player(t_data *d, float mx, float my);
+void				rotate(t_data *d, float rs);
+void				key_hook(mlx_key_data_t kd, void *param);
+void				update(void *param);
+void				init_player(t_data *d, int start_x, int start_y,
+						float dir_angle);
+void				handle_player_input(t_data *d);
+void				draw_ceiling(mlx_image_t *img, uint32_t color);
+void				draw_floor(mlx_image_t *img, uint32_t color);
+void				calculate_ray_direction(t_data *d, t_update_vars *v, int x);
+void				setup_ray_steps(t_data *d, t_update_vars *v);
+void				perform_dda(t_data *d, t_update_vars *v);
+void				calculate_wall_distance(t_data *d, t_update_vars *v);
+void				cast_rays(t_data *d);
+void				get_texture(t_data *d);
+void				calculate_texture_x(t_data *d, t_update_vars *v,
+						mlx_texture_t *texture, double wall_x);
+void				render_texture_pixel(t_data *d, mlx_texture_t *texture,
+						int x, int y);
+void				render_texture_column(t_data *d, t_update_vars *v,
+						mlx_texture_t *texture, int x);
+void				draw_textured_wall_strip(t_data *d, t_update_vars *v,
+						int x);
+void				draw_wall_strip_paint(t_update_vars *v, t_data *d, int x);
+void				draw_wall_strip(t_data *d, t_update_vars *v, int x);
+void				calculate_wall_boundaries(t_update_vars *v);
+void				select_wall_texture(t_data *d, t_update_vars *v,
+						mlx_texture_t **texture);
+void				calculate_wall_x(t_data *d, t_update_vars *v,
+						double *wall_x);
+void				free_char_array(char **array);
+int					init_game(t_game *g, char *argv1);
+int					trim_it(t_game *g, t_data *d);
+void				start_game(t_data *d, t_game *g);
+double				get_spawn_angle(char **map);
+void				init_keys(t_data *d);
+int					can_fit_on(char c);
+char				*trim_texture_path(char *path);
+void				freexit(int i, t_data *d);
+void				init_data(t_data *d);
+void				calculate_wall_distance(t_data *d, t_update_vars *v);
+
+// char_validation
+int					is_valid_char(char c);
+int					is_wall(char c);
+int					is_empty(char c);
+int					is_player(char c);
+void				normalize_spaces(t_game *game);
+// map_validation
+void				check_player_number(int nb);
+void				find_player_pos(t_game *g);
+void				validate_map(t_game *g);
+// wall_validation
+void				check_sides(t_game *g, int y, int x);
+void				valid_walls(t_game *g, char **map, int y, int x);
+// int					check_walls(t_game *game);
+// parsing
+int					whitespaces(char *str);
+void				read_map(t_game *game, char *map);
+void				fill_map(t_game *game, char *reader);
+int					get_width_with_whitespaces(char *row);
+void				find_width(t_game *game);
+// parsing_6_lines.c
+int					set_tex_path(char **tex_path, char *ln, char *prefix);
+void				load_config(t_game *g);
+// void	load_tex(t_data *d);
+// void	load_img(t_data *d, mlx_image_t **img, const char *path);
+void				process_line(t_game *g, char *ln, int *conf6);
+void				verify_tex_dup(t_game *g);
+int					parse_line(t_game *g, char *ln);
+// parsing_rgb.c
+uint32_t			rgb_to_mlx_rgba(const int rgb[3]);
+int					parse_rgb(const char *ln, int rgb[3]);
+void				check_rgb_num(char **c);
+void				free_alloc(char **str);
+// error_handling.c
+void				err_exit_msg(char *msg);
+void				err_free_exit_msg(char *msg, char **c);
 #endif
