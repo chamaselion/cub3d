@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_6_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aokhapki <aokhapki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/27 15:07:18 by aokhapki         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:34:53 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	load_config(t_game *g)
 	count = 0;
 	ln = get_next_line(g->map_fd);
 	if (!ln)
-		err_exit_msg("Error reading from file");
+		err_exit_msg("Reading from file");
 	while (ln != NULL)
 	{
 		process_line(g, ln, &count);
