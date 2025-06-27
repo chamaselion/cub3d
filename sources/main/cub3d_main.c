@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/27 12:21:32 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:12:58 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,8 @@ int	init_game(t_game *g, char *argv1)
 	g->height_map = 0;
 	g->map = NULL;
 	g->map_fd = -1;
-	g->mlx = NULL;
 	g->player = (t_player){0};
 	g->width_map = 0;
-	g->x = 0;
-	g->y = 0;
 	g->so = NULL;
 	g->no = NULL;
 	g->we = NULL;

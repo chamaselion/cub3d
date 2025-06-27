@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/27 12:54:38 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:13:46 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
-# define CEILING_COLOR 0x303030FF
-# define FLOOR_COLOR 0x606060FF
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
 # define EAST 0
@@ -60,26 +58,26 @@ typedef struct s_textures
 
 typedef struct s_update_vars
 {
-	int			x;
-	int			y;
-	double		cx;
-	double		rx;
-	double		ry;
-	int			mx;
-	int			my;
-	double		sdx;
-	double		sdy;
-	double		ddx;
-	double		ddy;
-	int			stepx;
-	int			stepy;
-	int			hit;
-	int			side;// side: 0 = NORTH, 1 = SOUTH, 2 = EAST, 3 = WEST
-	double		pwd;
-	int			lh;
-	int			ds;
-	int			de;
-	uint32_t	col;
+	int			x; // Current x coordinate for wall strip rendering
+	int			y; // Current y coordinate for wall strip rendering
+	double		cx; // Camera x coordinate (normalized screen x position)
+	double		rx; // Ray direction X component
+	double		ry; // Ray direction Y component
+	int			mx; // Map X coordinate (current grid position)
+	int			my; // Map Y coordinate (current grid position)
+	double		sdx; // Step distance X (distance between X-side grid lines)
+	double		sdy; // Step distance Y (distance between Y-side grid lines)
+	double		ddx; // Delta distance X (accumulated distance to next X-side)
+	double		ddy; // Delta distance Y (accumulated distance to next Y-side)
+	int			stepx; // Step direction X (-1 or +1)
+	int			stepy; // Step direction Y (-1 or +1)
+	int			hit; // Hit flag (0 = no wall hit, 1 = wall hit)
+	int			side; // Wall side hit: 0=NORTH, 1=SOUTH, 2=EAST, 3=WEST
+	double		pwd; // Perpendicular wall distance (corrected for fisheye)
+	int			lh; // Line height (wall slice height on screen)
+	int			ds; // Draw start (top pixel of wall slice)
+	int			de; // Draw end (bottom pixel of wall slice)
+	uint32_t	col; // Color value for rendering
 }				t_update_vars;
 
 typedef struct s_player
@@ -90,7 +88,6 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	void			*mlx;
 	char			**map;
 	char			*so;
 	char			*no;
@@ -99,8 +96,6 @@ typedef struct s_game
 	char			pos;
 	int				c[3];
 	int				f[3];
-	int				x;
-	int				y;
 	int				map_fd;
 	int				height_map;
 	int				width_map;
@@ -156,7 +151,6 @@ void				calculate_wall_x(t_data *d, t_update_vars *v,
 						double *wall_x);
 void				free_char_array(char **array);
 int					init_game(t_game *g, char *argv1);
-int					trim_it(t_game *g, t_data *d);
 void				start_game(t_data *d, t_game *g);
 double				get_spawn_angle(char **map);
 void				init_keys(t_data *d);
@@ -189,8 +183,6 @@ void				find_width(t_game *game);
 // parsing_6_lines.c
 int					set_tex_path(char **tex_path, char *ln, char *prefix);
 void				load_config(t_game *g);
-// void	load_tex(t_data *d);
-// void	load_img(t_data *d, mlx_image_t **img, const char *path);
 void				process_line(t_game *g, char *ln, int *conf6);
 void				verify_tex_dup(t_game *g);
 int					parse_line(t_game *g, char *ln);
