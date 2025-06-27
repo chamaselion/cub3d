@@ -1,4 +1,4 @@
-NAME 	= cub3d
+NAME 	= cub3D
 SRC_DIR = sources
 OBJ_DIR = obj
 
