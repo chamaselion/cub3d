@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 02:43:09 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 23:18:35 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:21:32 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ void	start_game(t_data *d, t_game *g)
 	init_keys(d);
 	d->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
 	if (!d->mlx)
-		return (ft_putstr_fd("Error: Failed to initialize MLX\n", 2),
+		return (ft_putstr_fd("Error\nFailed to initialize MLX\n", 2),
 			freexit(EXIT_FAILURE, d));
 	d->img = mlx_new_image(d->mlx, WIDTH, HEIGHT);
 	if (!d->img)
-		return (ft_putstr_fd("Error: Failed to create image\n", 2),
+		return (ft_putstr_fd("Error\nFailed to create image\n", 2),
 			freexit(EXIT_FAILURE, d));
 	if (mlx_image_to_window(d->mlx, d->img, 0, 0) < 0)
-		return (ft_putstr_fd("Error: Failed to attach image to window\n", 2),
+		return (ft_putstr_fd("Error\nFailed to attach image to window\n", 2),
 			freexit(EXIT_FAILURE, d));
 	mlx_key_hook(d->mlx, key_hook, d);
 	mlx_close_hook(d->mlx, (void (*)(void *))mlx_close_window, d->mlx);
 	if (!mlx_loop_hook(d->mlx, update, d))
-		return (ft_putstr_fd("Error: Failed to enter loop\n", 2),
+		return (ft_putstr_fd("Error\nFailed to enter loop\n", 2),
 			freexit(EXIT_FAILURE, d));
 	mlx_loop(d->mlx);
 	freexit(EXIT_SUCCESS, d);
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 	t_game	g;
 
 	if (argc != 2)
-		return (ft_putstr_fd("Bad arguments\n", 2), 1);
+		return (ft_putstr_fd("Error\nBad arguments\n", 2), 1);
 	init_data(&d);
 	init_game(&g, argv[1]);
 	validate_map(&g);

@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:53 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 15:33:51 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:21:51 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ void	cast_rays(t_data *d)
 	t_update_vars	v;
 	int				x;
 
-	if (!d->t.north_texture)
-		return ;
+	if (!d->t.north_texture || !d->t.south_texture
+		|| !d->t.east_texture || !d->t.west_texture)
+		return (freexit(1, d),
+			ft_putstr_fd("Error\nNo textures loaded in\n", 2));
 	x = 0;
 	while (x < WIDTH)
 	{

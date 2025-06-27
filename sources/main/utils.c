@@ -6,34 +6,11 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:01:04 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 19:04:26 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:48:39 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char	*trim_map_line(char *line)
-{
-	int		i;
-	int		j;
-	char	*trimmed;
-
-	if (!line)
-		return (NULL);
-	trimmed = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	if (!trimmed)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			trimmed[j++] = line[i];
-		i++;
-	}
-	trimmed[j] = '\0';
-	return (trimmed);
-}
 
 void	free_char_array(char **array)
 {
@@ -94,4 +71,12 @@ double	get_spawn_angle(char **map)
 		i++;
 	}
 	return (-1);
+}
+
+void	check_player_number(int nb)
+{
+	if (nb == 0)
+		err_exit_msg("No player character found");
+	if (nb > 1)
+		err_exit_msg("Multiple player characters found");
 }

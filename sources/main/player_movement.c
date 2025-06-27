@@ -6,19 +6,11 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:00:43 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 15:26:21 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:17:21 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	move_player(t_data *d, float mx, float my)
-// {
-// 	if (d->g->map[(int)(d->py)][(int)(d->px + mx)] == '0')
-// 		d->px += mx;
-// 	if (d->g->map[(int)(d->py + my)][(int)(d->px)] == '0')
-// 		d->py += my;
-// }
 
 void	move_player(t_data *d, float mx, float my)
 {

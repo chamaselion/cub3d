@@ -6,41 +6,11 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 00:01:00 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/24 17:21:30 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:19:47 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	draw_wall_strip_paint(t_update_vars *v, t_data *d, int x)
-// {
-// 	v->y = v->ds;
-// 	while (v->y <= v->de)
-// 	{
-// 		mlx_put_pixel(d->img, x, v->y, v->col);
-// 		v->y++;
-// 	}
-// }
-
-// void	draw_wall_strip(t_data *d, t_update_vars *v, int x)
-// {
-// 	v->lh = (int)(HEIGHT / v->pwd);
-// 	v->ds = -v->lh / 2 + HEIGHT / 2;
-// 	v->de = v->lh / 2 + HEIGHT / 2;
-// 	if (v->ds < 0)
-// 		v->ds = 0;
-// 	if (v->de >= HEIGHT)
-// 		v->de = HEIGHT - 1;
-// 	if (v->side == 1)
-// 		v->col = WALL_SOUTH;
-// 	if (v->side == 0)
-// 		v->col = WALL_NORTH;
-// 	if (v->side == 2)
-// 		v->col = WALL_EAST;
-// 	if (v->side == 3)
-// 		v->col = WALL_WEST;
-// 	draw_wall_strip_paint(v, d, x);
-// }
 
 void	calculate_wall_boundaries(t_update_vars *v)
 {

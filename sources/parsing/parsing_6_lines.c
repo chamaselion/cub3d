@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 10:17:29 by aokhapki          #+#    #+#             */
-/*   Updated: 2025/06/26 23:25:07 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:55:47 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	load_config(t_game *g)
 
 	count = 0;
 	ln = get_next_line(g->map_fd);
+	if (!ln)
+		err_exit_msg("Error reading from file");
 	while (ln != NULL)
 	{
 		process_line(g, ln, &count);

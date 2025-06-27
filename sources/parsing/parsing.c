@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 15:43:19 by alima             #+#    #+#             */
-/*   Updated: 2025/06/26 21:20:44 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:34:57 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	fill_map(t_game *game, char *reader)
 
 	y = 0;
 	game->map = ft_calloc(300, sizeof(char *));
+	if (!game->map)
+		err_exit_msg("Memory allocation failed");
 	while (reader)
 	{
 		game->map[y++] = ft_strdup(reader);

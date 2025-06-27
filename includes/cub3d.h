@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:56 by bszikora          #+#    #+#             */
-/*   Updated: 2025/06/26 23:28:13 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:54:38 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@
 # define HEIGHT 1000
 # define CEILING_COLOR 0x303030FF
 # define FLOOR_COLOR 0x606060FF
-# define WALL_NORTH 0x0000FFFF
-# define WALL_SOUTH 0x00FF00FF
-# define WALL_EAST 0xFFFFFFFF
-# define WALL_WEST 0xFF0000FF
 # define MOVESPEED 0.05
 # define ROTSPEED 0.05
 # define EAST 0
@@ -158,7 +154,6 @@ void				select_wall_texture(t_data *d, t_update_vars *v,
 						mlx_texture_t **texture);
 void				calculate_wall_x(t_data *d, t_update_vars *v,
 						double *wall_x);
-char				*trim_map_line(char *line);
 void				free_char_array(char **array);
 int					init_game(t_game *g, char *argv1);
 int					trim_it(t_game *g, t_data *d);
