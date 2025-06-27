@@ -6,7 +6,7 @@
 /*   By: bszikora <bszikora@student.42helbronn.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:41:37 by alima             #+#    #+#             */
-/*   Updated: 2025/06/27 12:47:30 by bszikora         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:17:16 by bszikora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,26 @@ char	**create_map_copy(t_game *g)
 void	validate_map(t_game *g)
 {
 	char	**map_copy;
+	int		y;
+	int		x;
 
 	find_width(g);
 	find_player_pos(g);
 	check_sides(g, g->player.y, g->player.x);
 	map_copy = create_map_copy(g);
+	y = 0;
+	while (g->map[y] != NULL)
+	{
+		x = 0;
+		while (g->map[y][x] != '\0')
+		{
+			if (!is_valid_char(g->map[y][x]) && g->map[y][x] != ' '
+					&& g->map[y][x] != '\t' && g->map[y][x] != '\n')
+				err_exit_msg("Invalid character in map!");
+			x++;
+		}
+		y++;
+	}
 	valid_walls(g, map_copy, g->player.y, g->player.x);
 	free_char_array(map_copy);
 }
